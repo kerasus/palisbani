@@ -35,12 +35,16 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { QuasarTemplateBuilder } from 'quasar-template-builder'
+import SideMenuDashboard from 'components/Menu/SideMenu/SideMenu-dashboard'
+import templateHeader from 'components/Template/templateHeader'
 
 export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    QuasarTemplateBuilder
+    QuasarTemplateBuilder,
+    SideMenuDashboard,
+    templateHeader
   },
   data () {
     return {
@@ -70,7 +74,7 @@ export default defineComponent({
   },
   computed: {
     isAdminPage () {
-      return this.$route.name.includes('Admin.')
+      return this.$route.name && this.$route.name.includes('Admin.')
     },
     otpLoginDialog: {
       get () {

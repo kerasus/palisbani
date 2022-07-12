@@ -1,7 +1,36 @@
+import process from 'process'
 import { store } from 'quasar/wrappers'
 import { createStore } from 'vuex'
+import vuejsStorage from '@krasus/vuejs-storage'
 
-// import example from './module-example'
+const plugins = []
+
+if (process.browser) {
+  // const vuexPersistedState =
+  //   createPersistedState({
+  //     // storage: window.localStorage,
+  //     paths: [
+  //       'Auth.accessToken',
+  //       'Auth.user',
+  //       'AppLayout'
+  //     ]
+  //   })
+  const vuexPersistedState =
+    vuejsStorage({
+      keys: [
+        'Auth',
+        'AppLayout'
+      ],
+      namespace: 'vuex-localstorage'
+      // driver: vuejsStorage.drivers.sessionStorage // any object has 'set','get','has' api, default: vuejsStorage.drivers.localStorage
+    })
+
+  plugins.push(vuexPersistedState)
+}
+
+import Auth from 'src/store/Auth'
+// import loading from 'src/store/loading'
+import AppLayout from 'src/store/AppLayout'
 
 /*
  * If not building with SSR mode, you can
@@ -15,7 +44,9 @@ import { createStore } from 'vuex'
 export default store(function (/* { ssrContext } */) {
   const Store = createStore({
     modules: {
-      // example
+      Auth,
+      // loading,
+      AppLayout
     },
 
     // enable strict mode (adds overhead!)
