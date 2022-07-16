@@ -60,7 +60,7 @@
 import { mixinAuth } from 'src/mixin/Mixins'
 
 export default {
-  name: 'LoginComponent',
+  name: 'LoginStep',
   mixins: [mixinAuth],
   props: {
     redirect: {

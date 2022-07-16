@@ -16,7 +16,7 @@
         class="username-input"
         v-model="username"
         label="ایمیل یا شماره تلفن همراه"
-        @keydown.enter="login"
+        @keydown.enter="register"
       >
         <template v-slot:prepend>
           <q-icon name="person"></q-icon>
@@ -54,7 +54,7 @@
         class="username-input"
         v-model="verifyNumber"
         label=""
-        @keydown.enter="login"
+        @keydown.enter="register"
       />
       <div class="resend-timer-message">
         <span class="resend-timer-message-value">
@@ -136,7 +136,7 @@
 import { mixinAuth } from 'src/mixin/Mixins'
 
 export default {
-  name: 'LoginComponent',
+  name: 'RegisterStep',
   mixins: [mixinAuth],
   props: {
     redirect: {
