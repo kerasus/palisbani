@@ -84,7 +84,17 @@ module.exports = configure(function (ctx) {
         type: 'http'
       },
       port: 8080,
-      open: true // opens browser window automatically
+      open: true, // opens browser window automatically
+      proxy: {
+        [process.env.API]: {
+          target: process.env.API_SERVER,
+          changeOrigin: true,
+          secure: false,
+          pathRewrite: {
+            ['^' + process.env.API]: ''
+          }
+        }
+      }
     },
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-framework
