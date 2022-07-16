@@ -1,14 +1,80 @@
 ﻿@font-face {
-	font-family: AzarMehr;
-	font-style: normal;
-  font-weight: normal;
-	src: url('../../../public/assets/fonts/azarmehr_monospaced/Sans/Font/AzarMehrMonospacedSansRegular.ttf');
-	src: url('../../../public/assets/fonts/azarmehr_monospaced/Sans/Font/AzarMehrMonospacedSansRegular.ttf') format('truetype');
+  font-family: AzarMehr;
+  font-style: normal;
+  font-weight: 50;
+  src: url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/ttf/100-AzarMehr-FD-Thin.ttf');
+  src: url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/woff2/100-AzarMehr-FD-Thin.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/ttf/100-AzarMehr-FD-Thin.ttf') format('truetype');
 }
+
 @font-face {
-	font-family: AzarMehr;
-	font-style: normal;
-	font-weight: bold;
-	src: url('../../../public/assets/fonts/azarmehr_monospaced/Sans/Font/AzarMehrMonospacedSansBold.ttf');
-	src: url('../../../public/assets/fonts/azarmehr_monospaced/Sans/Font/AzarMehrMonospacedSansBold.ttf') format('truetype');
+  font-family: AzarMehr;
+  font-style: normal;
+  font-weight: 100;
+  src: url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/ttf/200-AzarMehr-FD-ExtraLight.ttf');
+  src: url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/woff2/200-AzarMehr-FD-ExtraLight.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/ttf/200-AzarMehr-FD-ExtraLight.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: AzarMehr;
+  font-style: normal;
+  font-weight: 300;
+  src: url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/ttf/300-AzarMehr-FD-Light.ttf');
+  src: url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/woff2/300-AzarMehr-FD-Light.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/ttf/300-AzarMehr-FD-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: AzarMehr;
+  font-style: normal;
+  font-weight: normal;
+  src: url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/ttf/400-AzarMehr-FD-Regular.ttf');
+  src: url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/woff2/400-AzarMehr-FD-Regular.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/ttf/400-AzarMehr-FD-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: AzarMehr;
+  font-style: normal;
+  font-weight: 500;
+  src: url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/ttf/500-AzarMehr-FD-Medium.ttf');
+  src: url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/woff2/500-AzarMehr-FD-Medium.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/ttf/500-AzarMehr-FD-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: AzarMehr;
+  font-style: normal;
+  font-weight: 800;
+  src: url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/ttf/800-AzarMehr-FD-ExtraBold.ttf');
+  src: url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/woff2/800-AzarMehr-FD-ExtraBold.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/ttf/800-AzarMehr-FD-ExtraBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: AzarMehr;
+  font-style: normal;
+  font-weight: 850;
+  src: url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/ttf/900-AzarMehr-FD-Black.ttf');
+  src: url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/woff2/900-AzarMehr-FD-Black.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/ttf/900-AzarMehr-FD-Black.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: AzarMehr;
+  font-style: normal;
+  font-weight: 900;
+  src: url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/ttf/800-AzarMehr-FD-ExtraBold.ttf');
+  src: url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/woff2/800-AzarMehr-FD-ExtraBold.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/ttf/800-AzarMehr-FD-ExtraBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: AzarMehr;
+  font-style: normal;
+  font-weight: bold;
+  src: url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/ttf/700-AzarMehr-FD-Bold.ttf');
+  src: url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/woff2/700-AzarMehr-FD-Bold.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('src/css/fonts/azarmehr/FD (Farsi digits)/Static/ttf/700-AzarMehr-FD-Bold.ttf') format('truetype');
 }
