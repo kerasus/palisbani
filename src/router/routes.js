@@ -24,15 +24,15 @@ function getEntityCrudRouteObject (entityRoute) {
   }
 }
 const entityCrudRouteConfigs = [
-  {
-    path: 'users',
-    baseRouteName: 'Admin.User',
-    componentPath: 'pages/Admin/User',
-    meta: {
-      middlewares: [isSuperAdmin]
-    },
-    breadcrumbs: { title: 'مدیریت کاربران' }
-  },
+  // {
+  //   path: 'users',
+  //   baseRouteName: 'Admin.User',
+  //   componentPath: 'pages/Admin/User',
+  //   meta: {
+  //     middlewares: [isSuperAdmin]
+  //   },
+  //   breadcrumbs: { title: 'مدیریت کاربران' }
+  // },
   {
     path: 'content',
     baseRouteName: 'Admin.Content',
@@ -103,6 +103,18 @@ const routes = [
         },
         children: [
           { name: 'Admin.Settings', path: 'settings', component: () => import('pages/Admin/Settings'), breadcrumbs: { title: 'تنظیمات' } },
+          {
+            path: 'users',
+            component: () => import('layouts/bareLayout.vue'),
+            breadcrumbs: { title: 'کاربران' },
+            meta: {
+              middlewares: [auth]
+            },
+            children: [
+              { name: 'Admin.User.Index', path: '', component: () => import('pages/Admin/User/index.vue') },
+              { name: 'Admin.User.Show', path: '/:id', component: () => import('pages/Admin/User/show.vue') }
+            ]
+          },
           ...allEntityCrudRouteObjects
         ]
       }

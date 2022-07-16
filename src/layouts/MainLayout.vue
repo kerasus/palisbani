@@ -1,35 +1,36 @@
-<template>  <div class="main-layout"
-                 :class="{'isNotAdminPage': !isAdminPage}">
-  <quasar-template-builder v-model:value="properties"
-                           @onResize="resize"
-  >
-    <template #header>
-      <template-header />
-      <q-linear-progress
-        v-if="$store.getters['loading/loading']"
-        color="primary"
-        reverse
-        class="q-mt-sm"
-        indeterminate
-      />
-      <q-resize-observer @resize="setHeaderDimension" />
-    </template>
-    <template #left-drawer>
-      <div class="drawer-inside">
-        <side-menu-dashboard />
-      </div>
-    </template>
-    <template #content>
-      <div ref="contentInside"
-           class="content-inside">
-        <q-dialog v-model="otpLoginDialog">
-          <otp-login />
-        </q-dialog>
-        <Router :include="keepAliveComponents" />
-      </div>
-    </template>
-  </quasar-template-builder>
-</div>
+<template>
+  <div class="main-layout"
+       :class="{'isNotAdminPage': !isAdminPage}">
+    <quasar-template-builder v-model:value="properties"
+                             @onResize="resize"
+    >
+      <template #header>
+        <template-header />
+        <q-linear-progress
+          v-if="$store.getters['loading/loading']"
+          color="primary"
+          reverse
+          class="q-mt-sm"
+          indeterminate
+        />
+        <q-resize-observer @resize="setHeaderDimension" />
+      </template>
+      <template #left-drawer>
+        <div class="drawer-inside">
+          <side-menu-dashboard />
+        </div>
+      </template>
+      <template #content>
+        <div ref="contentInside"
+             class="content-inside">
+          <q-dialog v-model="otpLoginDialog">
+            <!--            <otp-login />-->
+          </q-dialog>
+          <Router :include="keepAliveComponents" />
+        </div>
+      </template>
+    </quasar-template-builder>
+  </div>
 </template>
 
 <script>
@@ -37,6 +38,7 @@ import { defineComponent, ref } from 'vue'
 import { QuasarTemplateBuilder } from 'quasar-template-builder'
 import SideMenuDashboard from 'components/Menu/SideMenu/SideMenu-dashboard'
 import templateHeader from 'components/Template/templateHeader'
+import Router from 'src/router/Router'
 
 export default defineComponent({
   name: 'MainLayout',
@@ -44,13 +46,14 @@ export default defineComponent({
   components: {
     QuasarTemplateBuilder,
     SideMenuDashboard,
-    templateHeader
+    templateHeader,
+    Router
   },
   data () {
     return {
       keepAliveComponents: [],
       properties: {
-        layoutView: 'lhh lpR fFf',
+        layoutView: 'lHh LpR fFf',
         layoutHeader: true,
         layoutHeaderVisible: true,
         layoutHeaderReveal: false,
@@ -96,9 +99,9 @@ export default defineComponent({
 
   methods: {
     updateLayoute () {
-      // this.$store.commit('AppLayout/updateVisibilityBreadcrumb', this.isAdminPage)
-      // this.$store.commit('AppLayout/updateLayoutLeftDrawerVisible', this.isAdminPage)
-      // this.$store.commit('AppLayout/updateLayoutView', 'lHh LpR fFf')
+      this.$store.commit('AppLayout/updateVisibilityBreadcrumb', this.isAdminPage)
+      this.$store.commit('AppLayout/updateLayoutLeftDrawerVisible', this.isAdminPage)
+      this.$store.commit('AppLayout/updateLayoutView', 'hHh lpR fFf')
     },
     setHeaderDimension (value) {
       // this.$refs.contentInside.style.height = 'calc(100vh +' + value.height + 'px'
