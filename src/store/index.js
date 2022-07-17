@@ -1,32 +1,33 @@
 import process from 'process'
 import { store } from 'quasar/wrappers'
 import { createStore } from 'vuex'
-import vuejsStorage from '@krasus/vuejs-storage'
+// import vuejsStorage from 'vuejs-storage'
+import createPersistedState from 'vuex-persistedstate'
 
-const plugins = []
+// const plugins = []
 
-if (process.browser) {
-  // const vuexPersistedState =
-  //   createPersistedState({
-  //     // storage: window.localStorage,
-  //     paths: [
-  //       'Auth.accessToken',
-  //       'Auth.user',
-  //       'AppLayout'
-  //     ]
-  //   })
-  const vuexPersistedState =
-    vuejsStorage({
-      keys: [
-        'Auth',
-        'AppLayout'
-      ],
-      namespace: 'vuex-localstorage'
-      // driver: vuejsStorage.drivers.sessionStorage // any object has 'set','get','has' api, default: vuejsStorage.drivers.localStorage
-    })
-
-  plugins.push(vuexPersistedState)
-}
+// if (process.browser) {
+//   // const vuexPersistedState =
+//   //   createPersistedState({
+//   //     // storage: window.localStorage,
+//   //     paths: [
+//   //       'Auth.accessToken',
+//   //       'Auth.user',
+//   //       'AppLayout'
+//   //     ]
+//   //   })
+//   const vuexPersistedState =
+//     vuejsStorage({
+//       keys: [
+//         'Auth',
+//         'AppLayout'
+//       ],
+//       namespace: 'vuex-localstorage'
+//       // driver: vuejsStorage.drivers.sessionStorage // any object has 'set','get','has' api, default: vuejsStorage.drivers.localStorage
+//     })
+//
+//   plugins.push(vuexPersistedState)
+// }
 
 import Auth from 'src/store/Auth'
 // import loading from 'src/store/loading'
@@ -48,6 +49,12 @@ export default store(function (/* { ssrContext } */) {
       // loading,
       AppLayout
     },
+    plugins: [
+      createPersistedState({
+        storage: window.localStorage,
+        paths: ['Auth', 'AppLayout']
+      })
+    ],
 
     // enable strict mode (adds overhead!)
     // for dev mode and --debug builds only

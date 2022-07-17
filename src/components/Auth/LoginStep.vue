@@ -72,14 +72,14 @@ export default {
     userLogin: false,
     loadingList: false,
     otpStep: 'sendOtp',
-    username: null,
-    password: null,
+    username: '09123456789',
+    password: '1000',
     otp: null
   }),
   created () {
-    if (this.getToken()) {
-      this.getUserData(() => { this.redirectTo() })
-    }
+    // if (this.getToken()) {
+    //   this.getUserData(() => { this.redirectTo() })
+    // }
   },
   computed: {
     user () {
@@ -98,12 +98,12 @@ export default {
     redirectTo () {
       let redirectTo = window.localStorage.getItem('redirectTo')
       if (!redirectTo) {
-        redirectTo = 'Admin.Content.Index'
+        redirectTo = 'Admin.User.Index'
       }
 
-      if (!this.user.isSuperUser()) {
-        redirectTo = 'Admin.Installment.Index'
-      }
+      // if (!this.user.isSuperUser()) {
+      //   redirectTo = 'Admin.Installment.Index'
+      // }
 
       this.$router.push({ name: redirectTo })
     },

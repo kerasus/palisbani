@@ -1,12 +1,14 @@
-import process from 'process'
+// import process from 'process'
 // process.client or process.browser
-const server = process.env.API
+// const server = process.env.API
+const server = '/api'
 const API_ADDRESS = {
   auth: {
+    login: server + '/auth/login',
+    sendOtp: server + '/auth/send-otp',
+    signUp: server + '/auth/sign-up',
     loginAdmin: server + '/auth/login',
     refreshToken: server + '/auth/refresh-token',
-    signUp: server + '/auth/sign-up',
-    sendOtp: server + '/auth/send-otp',
     changePass: server + '/auth/change-pass',
     loginOtp: server + '/auth/login-otp'
   },
@@ -17,6 +19,9 @@ const API_ADDRESS = {
   user: {
     base: server + '/uma/users'
   },
+  category: {
+    base: server + '/lma/categories'
+  },
   content: {
     base: server + '/cma/contents',
     customTypes: {
@@ -25,9 +30,6 @@ const API_ADDRESS = {
       majame: server + '/cma/contents?type=majame',
       moshaverin: server + '/cma/contents?type=moshaverin'
     }
-  },
-  category: {
-    base: server + '/cma/categories'
   },
   feedback: {
     base: server + '/core/feedbacks'

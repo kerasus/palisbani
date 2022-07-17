@@ -42,7 +42,7 @@ export default {
   components: { menuItem },
   computed: {
     isAdminRoute () {
-      return this.$route.name.includes('Admin.')
+      return this.$route.name && this.$route.name.includes('Admin.')
     },
     user () {
       return this.$store.getters['Auth/user']

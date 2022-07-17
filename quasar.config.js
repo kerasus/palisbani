@@ -86,12 +86,20 @@ module.exports = configure(function (ctx) {
       port: 8080,
       open: true, // opens browser window automatically
       proxy: {
-        [process.env.API]: {
-          target: process.env.API_SERVER,
+        // [process.env.APP_API]: {
+        //   target: process.env.APP_API_SERVER,
+        //   changeOrigin: true,
+        //   secure: false,
+        //   pathRewrite: {
+        //     ['^' + process.env.APP_API]: ''
+        //   }
+        // },
+        '/api': {
+          target: 'http://palizvani.hghweb.ir/api',
           changeOrigin: true,
           secure: false,
           pathRewrite: {
-            ['^' + process.env.API]: ''
+            '^/api': ''
           }
         }
       }

@@ -6,24 +6,26 @@
   "author": "ali <aliesmaeeli20@gmail.com>",
   "private": true,
   "scripts": {
-    "lint": "eslint --ext .js,.vue ./",
+    "lint": "eslint --ext .js,.vue ./ --fix",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
     "@krasus/vuejs-storage": "^3.1.1",
-    "@quasar/extras": "^1.0.0",
-    "axios": "^0.21.1",
-    "core-js": "^3.6.5",
+    "@quasar/extras": "^1.14.3",
+    "axios": "^0.27.2",
+    "core-js": "^3.23.4",
     "js-abstract-model": "^0.1.31",
     "moment-jalaali": "^0.9.6",
     "process": "^0.11.10",
-    "quasar": "^2.6.0",
+    "quasar": "^2.7.5",
     "quasar-crud": "^0.2.33",
     "quasar-template-builder": "^1.0.8",
-    "vue": "^3.0.0",
-    "vue-i18n": "^9.0.0",
-    "vue-router": "^4.0.0",
-    "vuex": "^4.0.1"
+    "vue": "^3.2.37",
+    "vue-i18n": "^9.1.10",
+    "vue-router": "^4.0.13",
+    "vuejs-storage": "^3.1.1",
+    "vuex": "^4.0.2",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.13.14",

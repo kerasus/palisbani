@@ -1,32 +1,18 @@
 <template>
   <entity-index
     v-model:value="inputs"
-    title="لیست کاربران"
+    title="لیست دسته بندی ها"
     :api="api"
     :table="table"
     :table-keys="tableKeys"
-  />
-  <entity-crud
-    v-model:edit-inputs="editInputs"
-    v-model:index-inputs="indexInputs"
-    v-model:show-inputs="showInputs"
-    v-model:create-inputs="createInputs"
-    v-model:default-inputs="defaultInputs"
-    v-bind="allProps"
   >
-    <template v-slot:entity-crud-table-cell="{inputData, showConfirmRemoveDialog}">
+    <template #table-cell="{inputData, showConfirmRemoveDialog}">
       <q-td :props="inputData.props">
         <template v-if="inputData.props.col.name === 'actions'">
-          <q-btn round
-                 flat
-                 dense
-                 size="md"
-                 color="info"
-                 icon="info"
-                 :to="{name:'Admin.User.Show', params: {id: inputData.props.row.id}}">
-            <q-tooltip>
-              مشاهده
-            </q-tooltip>
+          <q-btn size="md"
+                 color="primary"
+                 label="جزییات"
+                 :to="{name: 'Admin.Category.Show', params: {id: inputData.props.row.id}}">
           </q-btn>
           <q-btn round
                  flat
@@ -41,36 +27,29 @@
             </q-tooltip>
           </q-btn>
         </template>
-        <template v-else-if="inputData.props.col.name === 'description'">
-          <div v-html="inputData.props.value" />
-        </template>
         <template v-else>
           {{ inputData.props.value }}
         </template>
       </q-td>
     </template>
-  </entity-crud>
+  </entity-index>
 </template>
 
 <script>
 import API_ADDRESS from 'src/api/Addresses'
-import { EntityCrud, EntityIndex } from 'quasar-crud'
+import { EntityIndex } from 'quasar-crud'
 
 export default {
-  name: 'Admin.User.Index',
+  name: 'Admin.Category.Index',
   components: {
-    EntityCrud,
     EntityIndex
   },
   data () {
     return {
       inputs: [
-        { type: 'input', name: 'id', value: null, label: 'شماره', col: 'col-md-3' },
-        { type: 'input', name: 'first_name', value: null, label: 'نام', col: 'col-md-3' },
-        { type: 'input', name: 'last_name', value: null, label: 'نام خانوادگی', col: 'col-md-3' },
-        { type: 'input', name: 'last_name', value: null, label: 'کد ملی', col: 'col-md-3' }
+        { type: 'input', name: 'title', value: null, label: 'نام', col: 'col-md-12' }
       ],
-      api: 'https://reqres.in/api/users',
+      api: API_ADDRESS.category.base,
       table: {
         columns: [
           {
@@ -81,44 +60,37 @@ export default {
             field: row => row.id
           },
           {
-            name: 'fullname',
+            name: 'title',
             required: true,
-            label: 'نام و نام خانوادگی',
+            label: 'نام',
             align: 'left',
-            field: row => row.avatar
+            field: row => row.title
           },
           {
-            name: 'first_name',
+            name: 'count',
             required: true,
-            label: 'کد ملی',
+            label: 'تعداد درس های دسته',
             align: 'left',
-            field: row => row.first_name
+            field: () => '...'
           },
           {
-            name: 'last_name',
+            name: 'creation_time',
             required: true,
-            label: 'شماره تلفن',
+            label: 'تاریخ ایجاد',
             align: 'left',
-            field: row => row.last_name
+            field: row => row.creation_time
           },
           {
-            name: 'email',
+            name: 'last_modification_time',
             required: true,
-            label: 'نقش',
+            label: 'تاریخ آخرین تغییر',
             align: 'left',
-            field: row => row.email
-          },
-          {
-            name: 'status',
-            required: true,
-            label: 'وضعیت',
-            align: 'left',
-            field: row => row.email
+            field: row => row.last_modification_time
           },
           {
             name: 'actions',
             required: true,
-            label: '',
+            label: 'عملیات',
             align: 'left',
             field: ''
           }
@@ -143,7 +115,7 @@ export default {
             show: 'اطلاعات کاربر',
             edit: 'اطلاعات کاربر',
             create: 'ثبت کاربر جدید',
-            index: 'لیست کاربران'
+            index: 'لیست دسته بندی ها'
           },
           showRouteName: 'Admin.User.Show',
           editRouteName: 'Admin.User.Edit',
@@ -243,17 +215,20 @@ export default {
         { type: 'input', name: 'national_code', label: 'کدملی', col: 'col-md-4' },
         { type: 'input', name: 'mobile_number', label: 'موبایل', col: 'col-md-4' },
         { type: 'input', name: 'email', label: 'ایمیل', col: 'col-md-4' },
-        { type: 'select', name: 'role', label: 'نقش', options: [{ label: 'superuser', value: 'superuser' }, { label: 'user', value: 'user' }], col: 'col-md-4' }
+        {
+          type: 'select',
+          name: 'role',
+          label: 'نقش',
+          options: [{ label: 'superuser', value: 'superuser' }, { label: 'user', value: 'user' }],
+          col: 'col-md-4'
+        }
       ]
     }
-  },
-  created () {
-    console.log('hi6')
   },
   methods: {
     // for index.vue
     getRemoveMessage (row) {
-      return 'آیا از حذف ' + row.nickname + ' اطمینان دارید؟'
+      return 'آیا از حذف ' + row.title + ' اطمینان دارید؟'
     }
   }
 }

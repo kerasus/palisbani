@@ -16,7 +16,9 @@
         class="username-input"
         v-model="username"
         label="ایمیل یا شماره تلفن همراه"
-        @keydown.enter="register"
+        :disable="loading"
+        :loading="loading"
+        @keydown.enter="goToVerifyStep"
       >
         <template v-slot:prepend>
           <q-icon name="person"></q-icon>
@@ -33,6 +35,8 @@
       <q-btn class="full-width btn-GoToVerify"
              color="primary"
              label="ادامه"
+             :disable="loading"
+             :loading="loading"
              @click="goToVerifyStep" />
       <div class="go-to-login-message">
         حساب کاربری دارید؟
@@ -54,7 +58,9 @@
         class="username-input"
         v-model="verifyNumber"
         label=""
-        @keydown.enter="register"
+        :disable="loading"
+        :loading="loading"
+        @keydown.enter="verify"
       />
       <div class="resend-timer-message">
         <span class="resend-timer-message-value">
@@ -65,6 +71,8 @@
       <q-btn class="full-width btn-verifyUsername"
              color="primary"
              label="تایید و ادامه"
+             :disable="loading"
+             :loading="loading"
              @click="verify" />
       <div class="go-to-set-username-message"
            @click="goToGetUsernameStep">
@@ -134,6 +142,7 @@
 
 <script>
 import { mixinAuth } from 'src/mixin/Mixins'
+import API_ADDRESS from 'src/api/Addresses'
 
 export default {
   name: 'RegisterStep',
@@ -145,6 +154,7 @@ export default {
     }
   },
   data: () => ({
+    loading: false,
     bannerMessage: 'ثبت نام در سامانه',
     registerStep: 'getUsername',
     username: null,
@@ -250,7 +260,41 @@ export default {
 
     },
     goToVerifyStep () {
-      this.setRegisterStep('verify')
+      if (!this.username) {
+        return
+      }
+      this.loading = true
+      this.$axios.post(API_ADDRESS.auth.sendOtp, {
+        input: this.username
+      })
+        .then(() => {
+          this.loading = false
+          // this.$axios.defaults.headers.common.Authorization = 'Bearer ' + this.$store.getters['Auth/accessToken']
+          // this.redirectTo()
+          this.setRegisterStep('verify')
+        })
+        .catch(err => {
+          this.handleErr(err.response)
+        })
+    },
+    verify () {
+      if (!this.verifyNumber) {
+        return
+      }
+      this.loading = true
+      this.$axios.post(API_ADDRESS.auth.signUp, {
+        input: this.username,
+        otp: this.verifyNumber
+      })
+        .then(() => {
+          this.loading = false
+          // this.$axios.defaults.headers.common.Authorization = 'Bearer ' + this.$store.getters['Auth/accessToken']
+          // this.redirectTo()
+          this.setRegisterStep('information')
+        })
+        .catch(err => {
+          this.handleErr(err.response)
+        })
     },
     goToGetUsernameStep () {
       this.setRegisterStep('getUsername')

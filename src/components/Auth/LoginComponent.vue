@@ -24,7 +24,7 @@ export default {
   components: { TemplateComponent, LoginStep, RegisterStep, InformationStep },
   data () {
     return {
-      step: 'register'
+      step: 'login'
     }
   },
   props: {

@@ -42,15 +42,15 @@ const entityCrudRouteConfigs = [
     },
     breadcrumbs: { title: 'محتوا' }
   },
-  {
-    path: 'category',
-    baseRouteName: 'Admin.Category',
-    componentPath: 'pages/Admin/Category',
-    meta: {
-      middlewares: [isSuperAdmin]
-    },
-    breadcrumbs: { title: 'دسته' }
-  },
+  // {
+  //   path: 'category',
+  //   baseRouteName: 'Admin.Category',
+  //   componentPath: 'pages/Admin/Category',
+  //   meta: {
+  //     middlewares: [isSuperAdmin]
+  //   },
+  //   breadcrumbs: { title: 'دسته' }
+  // },
   {
     path: 'media',
     baseRouteName: 'Admin.Media',
@@ -103,6 +103,7 @@ const routes = [
         },
         children: [
           { name: 'Admin.Settings', path: 'settings', component: () => import('pages/Admin/Settings'), breadcrumbs: { title: 'تنظیمات' } },
+          // { name: 'Admin.Category.Index', path: 'categories', component: () => import('pages/Admin/Category/index.vue'), breadcrumbs: { title: 'تنظیماssت' } },
           {
             path: 'users',
             component: () => import('layouts/bareLayout.vue'),
@@ -113,6 +114,20 @@ const routes = [
             children: [
               { name: 'Admin.User.Index', path: '', component: () => import('pages/Admin/User/index.vue') },
               { name: 'Admin.User.Show', path: '/:id', component: () => import('pages/Admin/User/show.vue') }
+            ]
+          },
+          // { name: 'Admin.Category.Index', path: 'categories', component: () => import('pages/Admin/Category/index.vue') },
+          {
+            name: 'Admin.Category',
+            path: 'categories',
+            component: () => import('layouts/bareLayout.vue'),
+            breadcrumbs: { title: 'دسته بندی ها' },
+            meta: {
+              middlewares: [auth]
+            },
+            children: [
+              { name: 'Admin.Category.Index', path: '', component: () => import('pages/Admin/Category/index.vue') }
+              // { name: 'Admin.Category.Show', path: '/:id', component: () => import('pages/Admin/Category/show.vue') }
             ]
           },
           ...allEntityCrudRouteObjects
