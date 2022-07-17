@@ -108,29 +108,6 @@ export default {
       this.$router.push({ name: redirectTo })
     },
 
-    handleErr (err) {
-      this.loadingList = false
-      const messages = []
-      for (const key in err.data.errors) {
-        err.data.errors[key].forEach(message => {
-          this.$q.notify({
-            type: 'negative',
-            message,
-            position: 'top'
-          })
-        })
-      }
-      if (!err.data.errors) {
-        if (err.data.message) messages.push(err.data.message)
-        else messages.push(err.statusText)
-        this.$q.notify({
-          type: 'negative',
-          message: messages,
-          position: 'top'
-        })
-      }
-    },
-
     login () {
       this.loadingList = true
       this.$store.dispatch('Auth/login', {
@@ -142,8 +119,8 @@ export default {
           this.$axios.defaults.headers.common.Authorization = 'Bearer ' + this.$store.getters['Auth/accessToken']
           this.redirectTo()
         })
-        .catch(err => {
-          this.handleErr(err.response)
+        .catch(() => {
+          this.loadingList = false
         })
     },
     goToRegisterStep () {

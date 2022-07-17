@@ -7,6 +7,7 @@ const API_ADDRESS = {
     login: server + '/auth/login',
     sendOtp: server + '/auth/send-otp',
     signUp: server + '/auth/sign-up',
+    setPass: server + '/auth/set-pass',
     loginAdmin: server + '/auth/login',
     refreshToken: server + '/auth/refresh-token',
     changePass: server + '/auth/change-pass',

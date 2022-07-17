@@ -90,7 +90,7 @@
         outlined
         id="name"
         class="name-input"
-        v-model="name"
+        v-model="firstname"
         label="نام خود را وارد کنید"
         @keydown.enter="register"
       >
@@ -159,6 +159,8 @@ export default {
     registerStep: 'getUsername',
     username: null,
     verifyNumber: null,
+    firstname: null,
+    lastname: null,
     password: null,
 
     userLogin: false,
@@ -214,44 +216,21 @@ export default {
       this.$router.push({ name: redirectTo })
     },
 
-    handleErr (err) {
-      this.loadingList = false
-      const messages = []
-      for (const key in err.data.errors) {
-        err.data.errors[key].forEach(message => {
-          this.$q.notify({
-            type: 'negative',
-            message,
-            position: 'top'
-          })
-        })
-      }
-      if (!err.data.errors) {
-        if (err.data.message) messages.push(err.data.message)
-        else messages.push(err.statusText)
-        this.$q.notify({
-          type: 'negative',
-          message: messages,
-          position: 'top'
-        })
-      }
-    },
-
     register () {
-      this.$emit('register')
-      // this.loadingList = true
-      // this.$store.dispatch('Auth/login', {
-      //   input: this.username,
-      //   password: this.password
-      // })
-      //   .then(() => {
-      //     this.loadingList = false
-      //     this.$axios.defaults.headers.common.Authorization = 'Bearer ' + this.$store.getters['Auth/accessToken']
-      //     this.redirectTo()
-      //   })
-      //   .catch(err => {
-      //     this.handleErr(err.response)
-      //   })
+      this.$axios.post(API_ADDRESS.auth.setPass, {
+        new_password: this.password,
+        firstname: this.firstname,
+        lastname: this.lastname
+      })
+        .then((response) => {
+          this.loading = false
+          // this.$store.commit('Auth/updateAccessToken', response.data.token.access_token)
+          // this.$store.commit('Auth/setAccessToken', response.data.token.access_token)
+          // this.$emit('register')
+        })
+        .catch(() => {
+          this.loading = false
+        })
     },
     goToLoginStep () {
       this.$emit('goToLoginStep')
@@ -273,8 +252,8 @@ export default {
           // this.redirectTo()
           this.setRegisterStep('verify')
         })
-        .catch(err => {
-          this.handleErr(err.response)
+        .catch(() => {
+          this.loading = false
         })
     },
     verify () {
@@ -286,14 +265,14 @@ export default {
         input: this.username,
         otp: this.verifyNumber
       })
-        .then(() => {
+        .then((response) => {
           this.loading = false
-          // this.$axios.defaults.headers.common.Authorization = 'Bearer ' + this.$store.getters['Auth/accessToken']
-          // this.redirectTo()
+          this.$store.commit('Auth/updateAccessToken', response.data.token.access_token)
+          this.$store.commit('Auth/setAccessToken', response.data.token.access_token)
           this.setRegisterStep('information')
         })
-        .catch(err => {
-          this.handleErr(err.response)
+        .catch(() => {
+          this.loading = false
         })
     },
     goToGetUsernameStep () {

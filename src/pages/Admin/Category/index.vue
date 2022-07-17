@@ -38,6 +38,7 @@
 <script>
 import API_ADDRESS from 'src/api/Addresses'
 import { EntityIndex } from 'quasar-crud'
+import moment from 'moment-jalaali'
 
 export default {
   name: 'Admin.Category.Index',
@@ -78,14 +79,14 @@ export default {
             required: true,
             label: 'تاریخ ایجاد',
             align: 'left',
-            field: row => row.creation_time
+            field: row => moment(row.creation_time, 'YYYY-M-D hh:mm:ss').format('jYYYY/jMM/jDD hh:mm:ss')
           },
           {
             name: 'last_modification_time',
             required: true,
             label: 'تاریخ آخرین تغییر',
             align: 'left',
-            field: row => row.last_modification_time
+            field: row => moment(row.last_modification_time, 'YYYY-M-D hh:mm:ss').format('jYYYY/jMM/jDD hh:mm:ss')
           },
           {
             name: 'actions',
