@@ -33,7 +33,7 @@
               <q-item-section
                 class="list-child-section"
               >
-                {{ subItem.title }}ss
+                {{ subItem.title }}
               </q-item-section>
               <span class="indicator" />
             </q-item>
@@ -55,7 +55,7 @@
       </div>
     </q-expansion-item>
     <q-item
-      v-if="item.show && item.routeName"
+      v-else-if="item.show && item.routeName"
       :to="getLink(item)"
       class="item-list"
       :class="{ 'alone-item': !item.children }"
@@ -75,7 +75,7 @@
       </div>
     </q-item>
     <q-item
-      v-if="item.show && !item.routeName"
+      v-else-if="item.show && !item.routeName"
       :href="getLink(item)"
       class="item-list"
       :class="{ 'alone-item': !item.children }"

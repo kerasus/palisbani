@@ -98,35 +98,7 @@ export default {
         // }
       ],
 
-      titlesList: [
-        // {
-        //   title: 'داشبورد',
-        //   icon: 'isax:home',
-        //   routeName: 'dashboard',
-        //   active: false,
-        //   children: []
-        // },
-        {
-          title: 'نظرات',
-          routeName: 'Admin.Feedback.Index',
-          show: true,
-          active: false
-        },
-        {
-          title: 'اقساط',
-          routeName: 'Admin.Installment.Index',
-          show: true,
-          active: false
-        },
-        {
-          title: 'تنظیمات',
-          icon: 'isax:setting-2',
-          routeName: 'Admin.Settings',
-          show: true,
-          active: false,
-          children: []
-        }
-      ]
+      titlesList: []
     }
   },
   created () {
@@ -143,31 +115,25 @@ export default {
             active: false
           },
           {
-            title: 'مدیریت محتوا',
+            title: 'سامانه آموزشی',
             routeName: null,
             show: true,
             open: false,
             active: false,
             children: [
               {
-                title: 'محتوا',
+                title: 'دسته بندی ها',
                 routeName: 'Admin.Content.Index',
                 show: true,
                 active: false
               },
               {
-                title: 'دسته محتوا',
+                title: 'دوره های آموزشی',
                 routeName: 'Admin.Category.Index',
                 show: true,
                 active: false
               }
             ]
-          },
-          {
-            title: 'گالری',
-            routeName: 'Admin.Media.Index',
-            show: true,
-            active: false
           }
         ])
       }

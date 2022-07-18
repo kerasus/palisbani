@@ -113,7 +113,7 @@ const routes = [
             },
             children: [
               { name: 'Admin.User.Index', path: '', component: () => import('pages/Admin/User/index.vue') },
-              { name: 'Admin.User.Show', path: '/:id', component: () => import('pages/Admin/User/show.vue') }
+              { name: 'Admin.User.Show', path: '/:id', component: () => import('pages/Admin/User/show.vue'), breadcrumbs: { title: 'اطلاعات کاربری' } }
             ]
           },
           // { name: 'Admin.Category.Index', path: 'categories', component: () => import('pages/Admin/Category/index.vue') },
