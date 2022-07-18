@@ -23,6 +23,9 @@ const API_ADDRESS = {
   category: {
     base: server + '/lma/categories'
   },
+  unit: {
+    base: server + '/lma/units'
+  },
   content: {
     base: server + '/cma/contents',
     customTypes: {

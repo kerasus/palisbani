@@ -123,7 +123,7 @@ export default {
             children: [
               {
                 title: 'دسته بندی ها',
-                routeName: 'Admin.Content.Index',
+                routeName: 'Admin.Category.Index',
                 show: true,
                 active: false
               },

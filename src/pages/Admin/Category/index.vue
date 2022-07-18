@@ -1,4 +1,8 @@
 <template>
+  <q-btn color="primary"
+         label="ایجاد دسته بندی جدید"
+         :to="{name: 'Admin.Category.Create'}"
+  />
   <entity-index
     v-model:value="inputs"
     title="لیست دسته بندی ها"
