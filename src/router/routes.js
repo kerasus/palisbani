@@ -50,6 +50,48 @@ const routes = [
               { name: 'Admin.Category.Create', path: 'create', component: () => import('pages/Admin/Category/create.vue') },
               { name: 'Admin.Category.Show', path: ':id', component: () => import('pages/Admin/Category/show.vue') }
             ]
+          },
+          {
+            name: 'Admin.Unit',
+            path: 'units',
+            component: () => import('layouts/bareLayout.vue'),
+            breadcrumbs: { title: 'طلیعه حکمت' },
+            meta: {
+              middlewares: [auth]
+            },
+            children: [
+              // { name: 'Admin.Category.Index', path: '', component: () => import('pages/Admin/Category/index.vue') },
+              // { name: 'Admin.Category.Create', path: 'create', component: () => import('pages/Admin/Category/create.vue') },
+              { name: 'Admin.Unit.Show', path: ':id', component: () => import('pages/Admin/Unit/show.vue'), breadcrumbs: { title: 'درس' } }
+            ]
+          },
+          {
+            name: 'Admin.SessionTemplate',
+            path: 'sessionTemplates',
+            component: () => import('layouts/bareLayout.vue'),
+            breadcrumbs: { title: 'طلیعه حکمت' },
+            meta: {
+              middlewares: [auth]
+            },
+            children: [
+              { name: 'Admin.SessionTemplate.Index', path: '', component: () => import('pages/Admin/SessionTemplate/index.vue') },
+              { name: 'Admin.SessionTemplate.Create', path: 'create', component: () => import('pages/Admin/SessionTemplate/create.vue') },
+              { name: 'Admin.SessionTemplate.Show', path: ':id', component: () => import('pages/Admin/SessionTemplate/show.vue') }
+            ]
+          },
+          {
+            name: 'Admin.Classroom',
+            path: 'classrooms',
+            component: () => import('layouts/bareLayout.vue'),
+            breadcrumbs: { title: 'طلیعه حکمت' },
+            meta: {
+              middlewares: [auth]
+            },
+            children: [
+              { name: 'Admin.Classroom.Index', path: '', component: () => import('pages/Admin/Classroom/index.vue') },
+              { name: 'Admin.Classroom.Create', path: 'create', component: () => import('pages/Admin/Classroom/create.vue') },
+              { name: 'Admin.Classroom.Show', path: ':id', component: () => import('pages/Admin/Classroom/show.vue') }
+            ]
           }
           // ...allEntityCrudRouteObjects
         ]

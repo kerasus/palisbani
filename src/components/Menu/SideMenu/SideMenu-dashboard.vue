@@ -1,6 +1,7 @@
 <template>
-  <div class="bg-primary side-menu-main-layout">
-    <div class="side-logo">
+  <div class="side-menu-main-layout">
+    <div v-if="false"
+         class="side-logo">
       <div class="logo-image">
 
       </div>
@@ -8,7 +9,6 @@
     <q-list
       class="side-menu-list"
       padding
-      dark
     >
       <q-input v-if="false"
                dense
@@ -129,7 +129,7 @@ export default {
               },
               {
                 title: 'دوره های آموزشی',
-                routeName: 'Admin.Category.Index',
+                routeName: 'Admin.Classroom.Index',
                 show: true,
                 active: false
               }
@@ -170,7 +170,6 @@ export default {
 .side-menu-main-layout {
   display: flex;
   flex-direction: column;
-  min-height: 840px;
   border-radius: 30px;
   margin: 40px 0 0 24px;
   overflow-y: auto;
@@ -402,7 +401,7 @@ export default {
 
     a {
       text-decoration: none;
-      color: white;
+      color: #212121;
       padding: 0;
     }
   }

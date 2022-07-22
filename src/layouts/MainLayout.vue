@@ -64,7 +64,7 @@ export default defineComponent({
         layoutLeftDrawerOverlay: false,
         layoutLeftDrawerElevated: false,
         layoutLeftDrawerBordered: false,
-        layoutLeftDrawerWidth: 325,
+        layoutLeftDrawerWidth: 240,
         layoutPageContainer: true,
         layoutRightDrawer: false,
         layoutFooter: false,

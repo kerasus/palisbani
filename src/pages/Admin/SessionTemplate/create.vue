@@ -6,7 +6,7 @@
     :entity-id-key="entityIdKey"
     :entity-param-key="entityParamKey"
     :show-route-name="showRouteName"
-    ref="classroomEntityCreate"
+    ref="categoryEntityCreate"
     :show-close-button="false"
     :show-edit-button="false"
     :show-expand-button="false"
@@ -17,7 +17,7 @@
       <div class="flex justify-end">
         <q-btn color="primary"
                label="تایید"
-               @click="createClassroom"
+               @click="createCategory"
         />
       </div>
       <div class="row q-col-gutter-md q-mb-md">
@@ -48,7 +48,7 @@ import API_ADDRESS from 'src/api/Addresses'
 import { EntityCreate } from 'quasar-crud'
 
 export default {
-  name: 'Admin.Classroom.Create',
+  name: 'Admin.Category.Create',
   components: {
     EntityCreate
   },
@@ -57,10 +57,10 @@ export default {
       newUnitLoading: false,
       newUnitName: null,
       newUnitSessionCount: null,
-      api: API_ADDRESS.classroom.base,
+      api: API_ADDRESS.category.base,
       entityIdKey: 'id',
       entityParamKey: 'id',
-      showRouteName: 'Admin.Classroom.Show',
+      showRouteName: 'Admin.Category.Show',
       inputs: [
         { type: 'input', name: 'title', responseKey: 'title', label: 'نام دسته بندی', col: 'col-md-6' },
         { type: 'separator', name: 'space', size: '0', col: 'col-md-12' }
@@ -68,8 +68,8 @@ export default {
     }
   },
   methods: {
-    createClassroom () {
-      this.$refs.classroomEntityCreate.createEntity()
+    createCategory () {
+      this.$refs.categoryEntityCreate.createEntity()
     }
   }
 }

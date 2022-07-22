@@ -1,6 +1,8 @@
 .quasar-crud-index-table {
   margin-right: -32px;
   margin-left: -32px;
+  //margin-top: -16px;
+  padding-top: 0;
   .q-table__card {
     background-color: transparent;
     box-shadow: none;
@@ -9,8 +11,8 @@
     }
     .q-table {
       thead {
-        background: gray;
-        color: white;
+        background: #F0EFEE;
+        color: #8588A3;
       }
     }
   }

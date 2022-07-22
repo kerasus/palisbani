@@ -1,121 +1,201 @@
 <template>
-  <entity-edit
-    v-model:value="inputs"
-    ref="categoryEntityEdit"
-    title="مشخصات دسته بندی"
-    :api="api"
-    :entity-id-key="entityIdKey"
-    :entity-param-key="entityParamKey"
-    :show-route-name="showRouteName"
-    :show-close-button="false"
-    :show-edit-button="false"
-    :show-expand-button="false"
-    :show-save-button="false"
-    :show-reload-button="false"
-  >
-    <template #after-form-builder>
-      <div class="flex justify-end">
-        <q-btn color="primary"
-               label="تایید"
-               @click="updateCategory"
-        />
-      </div>
-      <div class="row q-col-gutter-md q-mb-md">
-        <div class="col-md-3">
-          <q-input v-model="newUnitName"
-                   label="درس ها"
-                   :disable="newUnitLoading"
-                   :loading="newUnitLoading" />
-        </div>
-        <div class="col-md-3">
-          <q-input v-model="newUnitSessionCount"
-                   label="تعداد جلسات"
-                   type="number"
-                   :disable="newUnitLoading"
-                   :loading="newUnitLoading" />
-        </div>
-        <div class="col-md-3">
-          <q-btn color="primary"
-                 label="افزودن"
-                 @click="createUnit"
-          />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <entity-index
-            v-model:value="unitFilterInputs"
-            ref="unitEntityIndex"
-            title="لیست درس ها"
-            :api="unitApi"
-            :table="unitTable"
-            :table-keys="unitTableKeys"
-            :show-reload-button="false"
-            :show-search-button="false"
-            :show-expand-button="false"
-          >
-            <template #table-cell="{inputData, showConfirmRemoveDialog}">
-              <q-td :props="inputData.props">
-                <template v-if="inputData.props.col.name === 'actions'">
-                  <q-btn size="md"
-                         color="primary"
-                         label="تعیین جزییات"
-                         :to="{name: 'Admin.Category.Show', params: {id: inputData.props.row.id}}">
-                  </q-btn>
-                  <q-btn round
-                         flat
-                         dense
-                         size="md"
-                         color="negative"
-                         icon="delete"
-                         class="q-ml-md"
-                         @click="showConfirmRemoveDialog(inputData.props.row, 'id', getRemoveMessage(inputData.props.row))">
-                    <q-tooltip>
-                      حذف
-                    </q-tooltip>
-                  </q-btn>
-                </template>
-                <template v-else>
-                  {{ inputData.props.value }}
-                </template>
-              </q-td>
+  <div>
+    <div>
+      <entity-edit
+        v-model:value="inputs"
+        ref="categoryEntityEdit"
+        title="مشخصات دسته بندی"
+        :api="api"
+        :entity-id-key="entityIdKey"
+        :entity-param-key="entityParamKey"
+        :show-route-name="showRouteName"
+        :show-close-button="false"
+        :show-edit-button="false"
+        :show-expand-button="false"
+        :show-save-button="false"
+        :show-reload-button="false"
+      >
+        <template #after-form-builder>
+          <div>
+            <q-banner class="banner">
+              پیش نیازها
+            </q-banner>
+            <div class="row q-col-gutter-md">
+              <div class="col-md-3">
+                <select-control v-model:value="prerequisite.category"
+                                :options="categories"
+                                :disable="categoriesLoading"
+                                :loading="categoriesLoading"
+                                optionValue="id"
+                                optionLabel="title"
+                                label="دسته بندی"
+                                @update:model-value="getUnits"
+                />
+              </div>
+              <div class="col-md-3">
+                <select-control v-model:value="prerequisite.unit"
+                                :options="units"
+                                :disable="unitsLoading"
+                                :loading="unitsLoading"
+                                optionValue="id"
+                                optionLabel="title"
+                                label="درس"
+                />
+              </div>
+              <div class="col-md-3">
+                <q-btn color="primary"
+                       label="افزودن"
+                       @click="updateCategory"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-end">
+            <q-btn color="primary"
+                   label="تایید"
+                   @click="updateCategory"
+            />
+          </div>
+        </template>
+      </entity-edit>
+    </div>
+    <div class="q-mt-md">
+      <entity-index
+        v-model:value="sessionFilterInputs"
+        ref="sessionEntityIndex"
+        title="لیست جلسات"
+        :api="sessionApi"
+        :table="sessionTable"
+        :table-keys="sessionTableKeys"
+        :show-reload-button="false"
+        :show-search-button="false"
+        :show-expand-button="false"
+      >
+        <template #before-form-builder>
+          <div class="flex justify-end">
+            <q-btn color="primary"
+                   outline
+                   label="افزودن جلسه"
+                   @click="updateCategory"
+            />
+          </div>
+        </template>
+        <template #table-cell="{inputData, showConfirmRemoveDialog}">
+          <q-td :props="inputData.props">
+            <template v-if="inputData.props.col.name === 'actions'">
+              <div class="q-gutter-md">
+                <q-btn size="md"
+                       color="primary"
+                       outline
+                       label="بانک سوالات"
+                       :to="{name: 'Admin.Session.Show', params: {id: inputData.props.row.id}}">
+                </q-btn>
+                <q-btn size="md"
+                       color="primary"
+                       label="تعیین جزییات"
+                       :to="{name: 'Admin.SessionTemplate.Show', params: {id: inputData.props.row.id}}">
+                </q-btn>
+                <q-btn round
+                       flat
+                       dense
+                       size="md"
+                       color="negative"
+                       icon="delete"
+                       class="q-ml-md"
+                       @click="showConfirmRemoveDialog(inputData.props.row, 'id', getRemoveMessage(inputData.props.row))">
+                  <q-tooltip>
+                    حذف
+                  </q-tooltip>
+                </q-btn>
+              </div>
             </template>
-          </entity-index>
-        </div>
-      </div>
-    </template>
-  </entity-edit>
+            <template v-else>
+              {{ inputData.props.value }}
+            </template>
+          </q-td>
+        </template>
+      </entity-index>
+    </div>
+  </div>
 </template>
 
 <script>
 import API_ADDRESS from 'src/api/Addresses'
 import { EntityEdit, EntityIndex } from 'quasar-crud'
 import moment from 'moment-jalaali'
+import SelectControl from 'components/Control/Select'
 
 export default {
   name: 'Admin.Category.Index',
   components: {
+    SelectControl,
     EntityEdit,
     EntityIndex
   },
   data () {
     return {
-      newUnitLoading: false,
-      newUnitName: null,
-      newUnitSessionCount: null,
-      api: API_ADDRESS.category.base,
+      newSessionLoading: false,
+      newSessionName: null,
+      newSessionSessionCount: null,
+      api: API_ADDRESS.unit.base,
       entityIdKey: 'id',
       entityParamKey: 'id',
       showRouteName: 'Admin.User.Show',
       inputs: [
-        { type: 'input', name: 'title', responseKey: 'title', label: 'نام دسته بندی', col: 'col-md-6' },
-        { type: 'separator', name: 'space', size: '0', col: 'col-md-12' }
+        { type: 'input', name: 'title', responseKey: 'title', label: 'نام درس', col: 'col-md-12' },
+        {
+          type: 'tiptapEditor',
+          name: 'inputEditor',
+          label: 'قوانین درس',
+          options: {
+            bubbleMenu: false,
+            floatingMenu: false,
+            poem: false,
+            reading: false,
+            persianKeyboard: true,
+            mathliveOptions: { smartFence: false },
+            uploadServer: {
+              url: 'imageUrl',
+              instantUpload: true,
+              headers: { Authorization: 'Bearer ' + '65465' }
+            }
+          },
+          col: 'col-md-12'
+        },
+        {
+          type: 'tiptapEditor',
+          name: 'inputEditor',
+          label: 'آیین نامه',
+          options: {
+            bubbleMenu: false,
+            floatingMenu: false,
+            poem: false,
+            reading: false,
+            persianKeyboard: true,
+            mathliveOptions: { smartFence: false },
+            uploadServer: {
+              url: 'imageUrl',
+              instantUpload: true,
+              headers: { Authorization: 'Bearer ' + '65465' }
+            }
+          },
+          col: 'col-md-12'
+        }
       ],
 
-      unitFilterInputs: [],
+      categoriesLoading: false,
+      categories: [],
+      unitsLoading: false,
+      units: [],
+      prerequisite: {
+        category: null,
+        unit: null
+      },
 
-      unitApi: API_ADDRESS.unit.base,
-      unitTable: {
+      sessionFilterInputs: [],
+
+      sessionApi: API_ADDRESS.sessionTemplates.base + '?unit=' + this.$route.params.id,
+      sessionTable: {
         columns: [
           {
             name: 'id',
@@ -127,7 +207,7 @@ export default {
           {
             name: 'title',
             required: true,
-            label: 'نام درس',
+            label: 'عنوان جلسه',
             align: 'left',
             field: row => row.title
           },
@@ -162,7 +242,7 @@ export default {
         ],
         data: []
       },
-      unitTableKeys: {
+      sessionTableKeys: {
         data: 'results',
         total: 'count',
         currentPage: 'current',
@@ -174,30 +254,53 @@ export default {
   },
   created () {
     this.api += '/' + this.$route.params.id
+    this.getCategories()
   },
   methods: {
+    getCategories () {
+      this.categoriesLoading = true
+      this.$axios.get(API_ADDRESS.category.base)
+        .then(response => {
+          this.categoriesLoading = false
+          this.categories = response.data.results
+        })
+        .catch(() => {
+          this.categoriesLoading = false
+        })
+    },
+    getUnits () {
+      this.unitsLoading = true
+      this.$axios.get(API_ADDRESS.unit.base + '?category=' + this.prerequisite.category)
+        .then(response => {
+          this.unitsLoading = false
+          this.units = response.data.results
+        })
+        .catch(() => {
+          this.unitsLoading = false
+        })
+    },
     updateCategory () {
       this.$refs.categoryEntityEdit.editEntity()
     },
     getRemoveMessage (row) {
       return 'آیا از حذف ' + row.title + ' اطمینان دارید؟'
     },
-    reloadUnits () {
-      this.$refs.unitEntityIndex.reload()
+    reloadSessions () {
+      this.$refs.sessionEntityIndex.reload()
     },
-    createUnit () {
-      this.newUnitLoading = true
-      this.$axios.post(API_ADDRESS.unit.base, {
-        title: this.newUnitName,
+    createSession () {
+      this.newSessionLoading = true
+      this.$axios.post(API_ADDRESS.session.base, {
+        title: this.newSessionName,
         category: this.$route.params.id,
-        default_session_count: this.newUnitSessionCount
+        default_session_count: this.newSessionSessionCount
       })
         .then(() => {
-          this.newUnitLoading = false
-          this.reloadUnits()
+          this.newSessionLoading = false
+          this.reloadSessions()
         })
         .catch(() => {
-          this.newUnitLoading = false
+          this.newSessionLoading = false
         })
     }
   }

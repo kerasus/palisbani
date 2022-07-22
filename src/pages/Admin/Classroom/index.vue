@@ -1,7 +1,7 @@
 <template>
   <q-btn color="primary"
          label="ایجاد دسته بندی جدید"
-         :to="{name: 'Admin.Category.Create'}"
+         :to="{name: 'Admin.Classroom.Create'}"
   />
   <entity-index
     v-model:value="inputs"
@@ -16,7 +16,7 @@
           <q-btn size="md"
                  color="primary"
                  label="جزییات"
-                 :to="{name: 'Admin.Category.Show', params: {id: inputData.props.row.id}}">
+                 :to="{name: 'Admin.Classroom.Show', params: {id: inputData.props.row.id}}">
           </q-btn>
           <q-btn round
                  flat
@@ -45,16 +45,14 @@ import { EntityIndex } from 'quasar-crud'
 import moment from 'moment-jalaali'
 
 export default {
-  name: 'Admin.Category.Index',
+  name: 'Admin.Classroom.Index',
   components: {
     EntityIndex
   },
   data () {
     return {
-      inputs: [
-        { type: 'input', name: 'title', value: null, label: 'نام', col: 'col-md-12' }
-      ],
-      api: API_ADDRESS.category.base,
+      inputs: [],
+      api: API_ADDRESS.classroom.base,
       table: {
         columns: [
           {
@@ -67,30 +65,58 @@ export default {
           {
             name: 'title',
             required: true,
-            label: 'نام',
+            label: 'نام درس',
             align: 'left',
             field: row => row.title
           },
           {
-            name: 'count',
+            name: 'audience_gender_type',
             required: true,
-            label: 'تعداد درس های دسته',
+            label: 'جنسیت',
             align: 'left',
-            field: () => '...'
+            field: row => (row.audience_gender_type === 'FEMALE') ? 'خواهران' : (row.audience_gender_type === 'MALE') ? 'برادران' : 'خواهران و برادران'
           },
           {
-            name: 'creation_time',
+            name: 'status',
             required: true,
-            label: 'تاریخ ایجاد',
+            label: 'وضعیت',
             align: 'left',
-            field: row => moment(row.creation_time, 'YYYY-M-D hh:mm:ss').format('jYYYY/jMM/jDD hh:mm:ss')
+            field: ''
           },
           {
-            name: 'last_modification_time',
+            name: 'title',
             required: true,
-            label: 'تاریخ آخرین تغییر',
+            label: 'نوع برگزاری',
             align: 'left',
-            field: row => moment(row.last_modification_time, 'YYYY-M-D hh:mm:ss').format('jYYYY/jMM/jDD hh:mm:ss')
+            field: row => row.holding_type
+          },
+          {
+            name: 'title',
+            required: true,
+            label: 'هزینه(تومان)',
+            align: 'left',
+            field: row => row.price
+          },
+          {
+            name: 'title',
+            required: true,
+            label: 'استاد مربوطه',
+            align: 'left',
+            field: row => row.professor
+          },
+          {
+            name: 'title',
+            required: true,
+            label: 'تاریخ و زمان ثبت نام',
+            align: 'left',
+            field: row => moment(row.beginning_registration_period, 'YYYY-M-D hh:mm:ss').format('hh:mm:ss jYYYY/jMM/jDD')
+          },
+          {
+            name: 'title',
+            required: true,
+            label: 'ترم برگزاری',
+            align: 'left',
+            field: row => '...'
           },
           {
             name: 'actions',

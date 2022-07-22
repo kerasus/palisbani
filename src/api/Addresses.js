@@ -13,10 +13,6 @@ const API_ADDRESS = {
     changePass: server + '/auth/change-pass',
     loginOtp: server + '/auth/login-otp'
   },
-  media: {
-    base: server + '/cma/medias',
-    upload: server + '/cma/medias'
-  },
   user: {
     base: server + '/uma/users'
   },
@@ -26,22 +22,17 @@ const API_ADDRESS = {
   unit: {
     base: server + '/lma/units'
   },
-  content: {
-    base: server + '/cma/contents',
-    customTypes: {
-      other: server + '/cma/contents?type=other',
-      moarefi: server + '/cma/contents?type=moarefi',
-      majame: server + '/cma/contents?type=majame',
-      moshaverin: server + '/cma/contents?type=moshaverin'
-    }
+  session: {
+    base: server + '/lma/sessions'
   },
-  feedback: {
-    base: server + '/core/feedbacks'
+  sessionTemplates: {
+    base: server + '/lma/session_templates'
   },
-  installment: {
-    base: server + '/accounting/instalments',
-    bulkCreate: server + '/accounting/instalments/bulk',
-    pay: (installmentId) => server + '/accounting/instalments/' + installmentId + '/pay'
+  classroom: {
+    base: server + '/lma/classrooms'
+  },
+  media: {
+    upload: ''
   }
 }
 export default API_ADDRESS

@@ -10,11 +10,9 @@
       :label="item.title"
       :icon="item.icon"
       class="side-expansion-list"
-      dark
     >
       <div class="expansion-body">
-        <q-separator dark
-                     size="2px"
+        <q-separator size="2px"
                      vertical
                      class="vertical-separator" />
         <q-list class="list-expansion">
@@ -63,7 +61,8 @@
       exact-active-class="active-route"
     >
       <div class="section-title">
-        <q-item-section class="list-section title-icon"
+        <q-item-section v-if="item.icon"
+                        class="list-section title-icon"
                         avatar>
           <q-avatar :icon="item.icon"
                     size="30" />
@@ -367,7 +366,7 @@ export default {
 
     a {
       text-decoration: none;
-      color: white;
+      color: #212121;
       padding: 0;
     }
   }
@@ -411,7 +410,7 @@ export default {
     .q-item {
       display: flex;
       padding: 0 10px !important;
-
+      color: #212121;
     }
 
     .q-icon {

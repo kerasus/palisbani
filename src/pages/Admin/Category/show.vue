@@ -41,7 +41,7 @@
           />
         </div>
       </div>
-      <div class="row">
+      <div class="row ">
         <div class="col">
           <entity-index
             v-model:value="unitFilterInputs"
@@ -60,7 +60,7 @@
                   <q-btn size="md"
                          color="primary"
                          label="تعیین جزییات"
-                         :to="{name: 'Admin.Category.Show', params: {id: inputData.props.row.id}}">
+                         :to="{name: 'Admin.Unit.Show', params: {id: inputData.props.row.id}}">
                   </q-btn>
                   <q-btn round
                          flat
@@ -108,13 +108,12 @@ export default {
       entityParamKey: 'id',
       showRouteName: 'Admin.User.Show',
       inputs: [
-        { type: 'input', name: 'title', responseKey: 'title', label: 'نام دسته بندی', col: 'col-md-6' },
-        { type: 'separator', name: 'space', size: '0', col: 'col-md-12' }
+        { type: 'input', name: 'title', responseKey: 'title', label: 'نام دسته بندی', col: 'col-md-6' }
       ],
 
       unitFilterInputs: [],
 
-      unitApi: API_ADDRESS.unit.base,
+      unitApi: API_ADDRESS.unit.base + '?category=' + this.$route.params.id,
       unitTable: {
         columns: [
           {
@@ -203,3 +202,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.fit-to-card {
+  margin: -16px;
+}
+</style>

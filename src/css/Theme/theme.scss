@@ -5,4 +5,12 @@
 
 
 @import 'header';
+@import 'drawer';
 @import 'quasar-crud/quasar-crud';
+
+
+.main-layout {
+  & > .q-layout {
+    background: #F5F5F5;
+  }
+}
