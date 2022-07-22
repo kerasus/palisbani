@@ -152,8 +152,8 @@
               :position="'top'"
               full-width
     >
-      <q-card class="filter-card all-classroom-widget full-width">
-        <q-card-section class="filter-card-header">
+      <q-card class="filter-card all-classroom-widget">
+        <q-card-section class="filter-card-header filter-card-section">
           <div class="flex justify-between">
             <q-banner class="banner">
               فیلتر
@@ -177,7 +177,7 @@
             </q-btn>
           </div>
         </q-card-section>
-        <q-card-section class="filter-card-filter-section">
+        <q-card-section class="filter-card-filter-section filter-card-section">
           <div class="row q-col-gutter-md">
             <div class="col-md-3">
               <select-control v-model:value="filter.category"
@@ -228,13 +228,15 @@
             </div>
           </div>
         </q-card-section>
-        <q-card-actions class="filter-card-filter-actions">
+        <q-card-actions class="filter-card-filter-actions filter-card-section">
           <q-btn color="primary"
                  outline
                  label="لغو فیلتر"
+                 @click="closeFilterDialog"
           />
           <q-btn color="primary"
                  label="فیلتر کردن"
+                 @click="doFilter"
           />
         </q-card-actions>
       </q-card>
@@ -263,8 +265,7 @@ export default {
       unit: null,
       classroomStatus: null,
       classroomHoldingTypes: null,
-      professor: null,
-      group: null
+      professor: null
     },
     filterDialog: false,
     classrooms: []
@@ -297,9 +298,33 @@ export default {
     getUserFullname (user) {
       return user.firstname + ' ' + user.lastname
     },
+    getFilters () {
+      let filters = ''
+      if (this.filter.category) {
+        filters += '&category=' + this.filter.category
+      }
+      if (this.filter.unit) {
+        filters += '&unit=' + this.filter.unit
+      }
+      if (this.filter.classroomStatus) {
+        filters += '&classroomStatus=' + this.filter.classroomStatus
+      }
+      if (this.filter.classroomHoldingTypes) {
+        filters += '&classroomHoldingTypes=' + this.filter.classroomHoldingTypes
+      }
+      if (this.filter.professor) {
+        filters += '&professor=' + this.filter.professor
+      }
+
+      // if (filters) {
+      //   filters = filters.slice(1)
+      // }
+
+      return filters
+    },
     getClassrooms () {
       this.loading = true
-      this.$axios.get(API_ADDRESS.classroom.base + '?per_page=9999')
+      this.$axios.get(API_ADDRESS.classroom.base + '?per_page=9999' + this.getFilters())
         .then(response => {
           this.classrooms = response.data.results
           this.loading = false
@@ -336,6 +361,13 @@ export default {
     },
     openFilterDialog () {
       this.filterDialog = true
+    },
+    closeFilterDialog () {
+      this.filterDialog = false
+    },
+    doFilter () {
+      this.getClassrooms()
+      this.closeFilterDialog()
     }
   }
 }
@@ -416,6 +448,10 @@ export default {
 <style lang="scss">
 .all-classroom-widget.filter-card {
   background-color: #F9F9F9;
+  .filter-card-section {
+    width: 1476px;
+    margin: auto;
+  }
   .filter-card-header {
     margin-bottom: 53px;
     padding-bottom: 0;
@@ -423,6 +459,7 @@ export default {
   .filter-card-filter-actions {
     display: flex;
     justify-content: end;
+    margin-bottom: 65px;
     button {
       width: 158px;
     }
