@@ -1,11 +1,87 @@
 <template>
   <div class="header-inside col">
-    <div class="admin-top-menu">
+    <div v-if="isAdminPage"
+         class="admin-top-menu">
       <div class="logo">
         <q-img class="logo-image"
                src="/assets/images/admin/layout/admin-logo.png" />
       </div>
       <div class="top-menu-items"></div>
+    </div>
+    <div v-else
+         class="user-top-menu"
+         :class="{'isHomePage': isHomePage}"
+    >
+      <q-toolbar>
+        <q-btn flat
+               round
+               dense
+               class="top-menu-logo"
+        >
+          <q-img src="assets/images/web/user-top-menu-logo.png"
+                 width="53" />
+        </q-btn>
+        <q-btn stretch
+               flat
+               label="اخبار و رویدادها"
+               color="white"
+        />
+        <q-btn stretch
+               flat
+               label="سامانه آموزش"
+               color="white"
+        />
+        <q-btn-dropdown stretch
+                        flat
+                        label="آرشیو محتوایی"
+                        color="white"
+        >
+          <q-list>
+            <q-item-label header>عنوان یک</q-item-label>
+            <q-item v-for="n in 3"
+                    :key="`x.${n}`"
+                    clickable
+                    v-close-popup
+                    tabindex="0">
+              <q-item-section>
+                <q-item-label>زیر عنوان</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-separator inset
+                         spaced />
+            <q-item-label header>عنوان دو</q-item-label>
+            <q-item v-for="n in 3"
+                    :key="`y.${n}`"
+                    clickable
+                    v-close-popup
+                    tabindex="0">
+              <q-item-section>
+                <q-item-label>زیر عنوان</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
+        <q-btn stretch
+               flat
+               label="فروشگاه"
+               color="white"
+        />
+        <q-btn stretch
+               flat
+               label="پخش زنده"
+               color="white"
+        />
+        <q-btn stretch
+               flat
+               label="درباره ما"
+               color="white"
+        />
+        <q-btn stretch
+               flat
+               label="تماس با ما"
+               color="white"
+        />
+      </q-toolbar>
     </div>
     <!--    <div-->
     <!--      class="drawer-btn"-->
@@ -204,6 +280,9 @@ export default {
     isAdminPage () {
       return this.$route.name && this.$route.name.includes('Admin.')
     },
+    isHomePage () {
+      return this.$route.name && this.$route.name === 'UserPanel.Home'
+    },
     user () {
       return this.$store.getters['Auth/user']
     },
@@ -327,7 +406,18 @@ export default {
       }
     }
   }
+  .user-top-menu {
+    &.isHomePage {
+      margin-top: 30px;
+      margin-right: 100px;
+      margin-left: 100px;
+      .q-toolbar {
+        min-height: 68px;
+      }
+    }
+  }
 }
+
 .top-menu-items {
   border-radius: 10px;
   .q-btn {

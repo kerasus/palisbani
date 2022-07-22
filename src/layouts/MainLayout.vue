@@ -1,6 +1,6 @@
 <template>
   <div class="main-layout"
-       :class="{'isNotAdminPage': !isAdminPage}">
+       :class="{'isNotAdminPage': !isAdminPage, 'isHomePage': isHomePage}">
     <quasar-template-builder v-model:value="properties"
                              @onResize="resize"
     >
@@ -42,7 +42,6 @@ import Router from 'src/router/Router'
 
 export default defineComponent({
   name: 'MainLayout',
-
   components: {
     QuasarTemplateBuilder,
     SideMenuDashboard,
@@ -79,6 +78,9 @@ export default defineComponent({
     isAdminPage () {
       return this.$route.name && this.$route.name.includes('Admin.')
     },
+    isHomePage () {
+      return this.$route.name && this.$route.name === 'UserPanel.Home'
+    },
     otpLoginDialog: {
       get () {
         return this.$store.getters['AppLayout/otpLoginDialog']
@@ -101,7 +103,11 @@ export default defineComponent({
     updateLayoute () {
       this.$store.commit('AppLayout/updateVisibilityBreadcrumb', this.isAdminPage)
       this.$store.commit('AppLayout/updateLayoutLeftDrawerVisible', this.isAdminPage)
-      this.$store.commit('AppLayout/updateLayoutView', 'hHh lpR fFf')
+      if (this.isAdminPage) {
+        this.$store.commit('AppLayout/updateLayoutView', 'hHh lpR fFf')
+      } else {
+        this.$store.commit('AppLayout/updateLayoutView', 'lhh LpR fFf')
+      }
     },
     setHeaderDimension (value) {
       // this.$refs.contentInside.style.height = 'calc(100vh +' + value.height + 'px'
@@ -122,3 +128,17 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss">
+.main-layout {
+  &.isNotAdminPage {
+  }
+  &.isHomePage {
+    .q-header {
+      background-color: transparent;
+      border: none;
+      height: 98px;
+    }
+  }
+}
+</style>

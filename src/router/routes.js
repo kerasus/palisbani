@@ -6,16 +6,16 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     breadcrumbs: { title: 'خانه', loading: false, icon: 'home', route: { name: 'dashboard' } },
     children: [
-      // {
-      //   path: '',
-      //   name: 'UserPanel',
-      //   component: () => import('layouts/bareLayout.vue'),
-      //   children: [
-      //     { name: 'UserPanel.Home', path: '', component: () => import('pages/Index.vue') },
-      //     { name: 'UserPanel.Content', path: 'content/:content_id', component: () => import('pages/User/Content.vue') },
-      //     { name: 'UserPanel.Category', path: 'category/:category_id', component: () => import('pages/User/Category.vue') }
-      //   ]
-      // },
+      {
+        path: '',
+        name: 'User',
+        component: () => import('layouts/bareLayout.vue'),
+        children: [
+          { name: 'UserPanel.Home', path: '', component: () => import('pages/User/index.vue') }
+          // { name: 'UserPanel.Content', path: 'content/:content_id', component: () => import('pages/User/Content.vue') },
+          // { name: 'UserPanel.Category', path: 'category/:category_id', component: () => import('pages/User/Category.vue') }
+        ]
+      },
       {
         path: 'admin',
         component: () => import('layouts/AdminLayout.vue'),
