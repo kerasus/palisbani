@@ -39,7 +39,7 @@
           :show-expand-button="false"
           :show-save-button="false"
           :show-reload-button="false"
-          :before-get-data="beforeGetData"
+          :before-load-input-data="beforeLoadInputData"
         >
           <template #after-form-builder>
             <div class="flex justify-end">
@@ -122,14 +122,14 @@ export default {
       api: API_ADDRESS.classroom.base,
       entityIdKey: 'id',
       entityParamKey: 'id',
-      showRouteName: 'Admin.User.Show',
+      showRouteName: 'Admin.Classroom.Show',
       inputs: [
-        { type: 'file', name: 'title', responseKey: 'title', label: 'آپلود عکس دوره', col: 'col-md-3' },
+        { type: 'file', name: 'thumbnail', responseKey: 'thumbnail', label: 'آپلود عکس دوره', col: 'col-md-3' },
         { type: 'input', name: 'title', responseKey: 'title', label: 'نام دوره', col: 'col-md-12' },
         {
           type: 'select',
           name: 'category',
-          responseKey: 'category',
+          responseKey: 'unit_info.category',
           options: [],
           value: null,
           label: 'دسته بندی',
@@ -274,23 +274,36 @@ export default {
   },
   created () {
     this.api += '/' + this.$route.params.id
-    this.beforeGetData()
   },
   methods: {
-    beforeGetData () {
-      this.getCategories()
+    async beforeLoadInputData (responseData, setNewInputData) {
+      this.getProfessors(setNewInputData)
+      await this.getCategories(setNewInputData)
+      await this.getUnits(responseData.unit_info.category, setNewInputData)
+      this.$nextTick(() => {
+        this.setInputValue('category', responseData.unit_info.category)
+        this.setInputValue('unit', responseData.unit)
+      })
     },
-    getCategories () {
-      this.$axios.get(API_ADDRESS.category.base)
-        .then(response => {
-          this.loadSelectOptions('category', this.getSelectOptions(response.data.results, 'id', 'title'))
-        })
+    async getProfessors (setNewInputData) {
+      const response = await this.$axios.get(API_ADDRESS.user.base + '?per_page=9999&role=professor')
+      this.loadSelectOptions('professor', response.data.results.map(item => {
+        return {
+          value: item.id,
+          label: this.getUserFullname(item)
+        }
+      }), setNewInputData)
     },
-    getUnits (selectedClassId) {
-      this.$axios.get(API_ADDRESS.unit.base + '?category=' + this.selectedCategoryId)
-        .then(response => {
-          this.loadSelectOptions('unit', this.getSelectOptions(response.data.results, 'id', 'title'))
-        })
+    getUserFullname (user) {
+      return user.firstname + ' ' + user.lastname
+    },
+    async getCategories (setNewInputData) {
+      const response = await this.$axios.get(API_ADDRESS.category.base)
+      this.loadSelectOptions('category', this.getSelectOptions(response.data.results, 'id', 'title'), setNewInputData)
+    },
+    async getUnits (selectedcategoryId, setNewInputData) {
+      const response = await this.$axios.get(API_ADDRESS.unit.base + '?category=' + selectedcategoryId)
+      this.loadSelectOptions('unit', this.getSelectOptions(response.data.results, 'id', 'title'), setNewInputData)
     },
     getSelectOptions (result, value, label) {
       return result.map(item => {
@@ -308,9 +321,12 @@ export default {
       const inputIndex = this.inputs.findIndex(input => input.name === name)
       this.inputs[inputIndex].value = value
     },
-    loadSelectOptions (name, value) {
+    loadSelectOptions (name, value, setNewInputData) {
       const inputIndex = this.inputs.findIndex(input => input.name === name)
       this.inputs[inputIndex].options = value
+      if (typeof setNewInputData === 'function') {
+        setNewInputData(this.inputs)
+      }
     },
     updateClassroom () {
       this.$refs.categoryEntityEdit.editEntity()

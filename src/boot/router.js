@@ -13,7 +13,6 @@ function updateLayoute (store, routeName) {
 
 export default boot(({ router, store }) => {
   router.beforeEach((to, from, next) => {
-    console.log('hii')
     updateLayoute(store, to.name)
     next()
   })

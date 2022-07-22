@@ -129,7 +129,58 @@ export default {
       ]
     }
   },
+  created () {
+    this.beforeLoadInputData()
+  },
   methods: {
+    async beforeLoadInputData (responseData, setNewInputData) {
+      this.getProfessors(setNewInputData)
+      await this.getCategories(setNewInputData)
+      await this.getUnits(responseData.unit_info.category, setNewInputData)
+      this.$nextTick(() => {
+        this.setInputValue('category', responseData.unit_info.category)
+        this.setInputValue('unit', responseData.unit)
+      })
+    },
+    async getProfessors (setNewInputData) {
+      const response = await this.$axios.get(API_ADDRESS.user.base + '?per_page=9999&role=professor')
+      this.loadSelectOptions('professor', response.data.results.map(item => {
+        return {
+          value: item.id,
+          label: this.getUserFullname(item)
+        }
+      }), setNewInputData)
+    },
+    getUserFullname (user) {
+      return user.firstname + ' ' + user.lastname
+    },
+    async getCategories (setNewInputData) {
+      const response = await this.$axios.get(API_ADDRESS.category.base)
+      this.loadSelectOptions('category', this.getSelectOptions(response.data.results, 'id', 'title'), setNewInputData)
+    },
+    async getUnits (selectedcategoryId, setNewInputData) {
+      const response = await this.$axios.get(API_ADDRESS.unit.base + '?category=' + selectedcategoryId)
+      this.loadSelectOptions('unit', this.getSelectOptions(response.data.results, 'id', 'title'), setNewInputData)
+    },
+    getSelectOptions (result, value, label) {
+      return result.map(item => {
+        return {
+          value: item[value],
+          label: item[label]
+        }
+      })
+    },
+    setInputValue (name, value) {
+      const inputIndex = this.inputs.findIndex(input => input.name === name)
+      this.inputs[inputIndex].value = value
+    },
+    loadSelectOptions (name, value, setNewInputData) {
+      const inputIndex = this.inputs.findIndex(input => input.name === name)
+      this.inputs[inputIndex].options = value
+      if (typeof setNewInputData === 'function') {
+        setNewInputData(this.inputs)
+      }
+    },
     createClassroom () {
       this.$refs.classroomEntityCreate.createEntity()
     }
