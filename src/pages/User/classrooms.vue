@@ -35,11 +35,6 @@ export default {
                 }
               }
             ]
-          },
-          options: {
-            background: {
-              color: '#F6F6F6'
-            }
           }
         }
       ]

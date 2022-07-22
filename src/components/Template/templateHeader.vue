@@ -18,7 +18,7 @@
         <q-btn flat
                round
                dense
-               class="top-menu-logo"
+               class="top-menu-item top-menu-logo"
                :to="{name: 'UserPanel.Home'}"
         >
           <q-img src="assets/images/web/user-top-menu-logo.png"
@@ -27,17 +27,17 @@
         <q-btn stretch
                flat
                label="اخبار و رویدادها"
-               color="white"
+               class="top-menu-item"
         />
         <q-btn stretch
                flat
                label="سامانه آموزش"
-               color="white"
+               class="top-menu-item"
         />
         <q-btn-dropdown stretch
                         flat
                         label="آرشیو محتوایی"
-                        color="white"
+                        class="top-menu-item"
         >
           <q-list>
             <q-item-label header>عنوان یک</q-item-label>
@@ -67,22 +67,22 @@
         <q-btn stretch
                flat
                label="فروشگاه"
-               color="white"
+               class="top-menu-item"
         />
         <q-btn stretch
                flat
                label="پخش زنده"
-               color="white"
+               class="top-menu-item"
         />
         <q-btn stretch
                flat
                label="درباره ما"
-               color="white"
+               class="top-menu-item"
         />
         <q-btn stretch
                flat
                label="تماس با ما"
-               color="white"
+               class="top-menu-item"
         />
       </q-toolbar>
     </div>
@@ -261,12 +261,18 @@ export default {
     }
   }
   .user-top-menu {
+    margin-top: 30px;
+    margin-right: 100px;
+    margin-left: 100px;
+    margin-bottom: 22px;
+    .q-toolbar {
+      min-height: 68px;
+    }
     &.isHomePage {
-      margin-top: 30px;
-      margin-right: 100px;
-      margin-left: 100px;
       .q-toolbar {
-        min-height: 68px;
+        .top-menu-item {
+          color: white;
+        }
       }
     }
   }

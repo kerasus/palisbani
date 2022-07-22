@@ -10,6 +10,7 @@
         <q-btn outline
                color="primary"
                class="btn-filter"
+               @click="openFilterDialog"
         >
           فیلتر
           <svg xmlns="http://www.w3.org/2000/svg"
@@ -147,22 +148,155 @@
         </q-card>
       </div>
     </div>
+    <q-dialog v-model="filterDialog"
+              :position="'top'"
+              full-width
+    >
+      <q-card class="filter-card all-classroom-widget full-width">
+        <q-card-section class="filter-card-header">
+          <div class="flex justify-between">
+            <q-banner class="banner">
+              فیلتر
+            </q-banner>
+            <q-btn flat>
+              <svg id="close_black_24dp"
+                   xmlns="http://www.w3.org/2000/svg"
+                   width="32"
+                   height="32"
+                   viewBox="0 0 32 32">
+                <path id="Path_29089"
+                      data-name="Path 29089"
+                      d="M0,0H32V32H0Z"
+                      fill="none" />
+                <path id="Path_29090"
+                      data-name="Path 29090"
+                      d="M22.412,5.806a1.314,1.314,0,0,0-1.86,0L14.1,12.243l-6.45-6.45a1.315,1.315,0,1,0-1.86,1.86l6.45,6.45-6.45,6.45a1.315,1.315,0,0,0,1.86,1.86l6.45-6.45,6.45,6.45a1.315,1.315,0,0,0,1.86-1.86l-6.45-6.45,6.45-6.45A1.322,1.322,0,0,0,22.412,5.806Z"
+                      transform="translate(1.897 1.897)"
+                      fill="#ababab" />
+              </svg>
+            </q-btn>
+          </div>
+        </q-card-section>
+        <q-card-section class="filter-card-filter-section">
+          <div class="row q-col-gutter-md">
+            <div class="col-md-3">
+              <select-control v-model:value="filter.category"
+                              :options="categories"
+                              :disable="categoriesLoading"
+                              :loading="categoriesLoading"
+                              optionValue="id"
+                              optionLabel="title"
+                              label="گروه آموزشی"
+                              @update:model-value="getUnits"
+              />
+            </div>
+            <div class="col-md-3">
+              <select-control v-model:value="filter.unit"
+                              :options="units"
+                              :disable="unitsLoading"
+                              :loading="unitsLoading"
+                              optionValue="id"
+                              optionLabel="title"
+                              label="درس"
+              />
+            </div>
+            <div class="col-md-3">
+              <select-control v-model:value="filter.classroomStatus"
+                              :options="classroomStatuses"
+                              optionValue="value"
+                              optionLabel="label"
+                              label="وضعیت دوره"
+              />
+            </div>
+            <div class="col-md-3">
+              <select-control v-model:value="filter.classroomHoldingTypes"
+                              :options="classroomHoldingTypes"
+                              optionValue="value"
+                              optionLabel="label"
+                              label="نوع برگزاری"
+              />
+            </div>
+            <div class="col-md-3">
+              <select-control v-model:value="filter.professor"
+                              :options="professors"
+                              :disable="professorsLoading"
+                              :loading="professorsLoading"
+                              optionValue="value"
+                              optionLabel="label"
+                              label="استاد"
+              />
+            </div>
+          </div>
+        </q-card-section>
+        <q-card-actions class="filter-card-filter-actions">
+          <q-btn color="primary"
+                 outline
+                 label="لغو فیلتر"
+          />
+          <q-btn color="primary"
+                 label="فیلتر کردن"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script>
 import API_ADDRESS from 'src/api/Addresses'
+import Enums from 'assets/Enums/Enums'
+import SelectControl from 'components/Control/Select'
 
 export default {
   name: 'AllClassrooms',
+  components: { SelectControl },
   data: () => ({
     loading: false,
+    units: [],
+    categories: [],
+    professors: [],
+    professorsLoading: false,
+    categoriesLoading: false,
+    unitsLoading: false,
+    filter: {
+      category: null,
+      unit: null,
+      classroomStatus: null,
+      classroomHoldingTypes: null,
+      professor: null,
+      group: null
+    },
+    filterDialog: false,
     classrooms: []
   }),
+  computed: {
+    classroomStatuses () {
+      return Enums.classroomStatuses
+    },
+    classroomHoldingTypes () {
+      return Enums.classroomHoldingTypes
+    }
+  },
   created () {
     this.getClassrooms()
+    this.getCategories()
+    this.getUnits()
   },
   methods: {
+    getProfessors () {
+      this.$axios.get(API_ADDRESS.user.base + '?per_page=9999&role=professor')
+        .then(response => {
+          this.professors = response.data.results.map(item => {
+            return {
+              value: item.id,
+              label: this.getUserFullname(item)
+            }
+          })
+        })
+    },
+    getUserFullname (user) {
+      return user.firstname + ' ' + user.lastname
+    },
     getClassrooms () {
       this.loading = true
       this.$axios.get(API_ADDRESS.classroom.base + '?per_page=9999')
@@ -173,6 +307,35 @@ export default {
         .catch(() => {
           this.loading = false
         })
+    },
+    getCategories () {
+      this.categoriesLoading = true
+      this.$axios.get(API_ADDRESS.category.base)
+        .then(response => {
+          this.categoriesLoading = false
+          this.categories = response.data.results
+        })
+        .catch(() => {
+          this.categoriesLoading = false
+        })
+    },
+    getUnits (categoryId) {
+      this.unitsLoading = true
+      let address = API_ADDRESS.unit.base
+      if (categoryId) {
+        address = API_ADDRESS.unit.base + '?category=' + categoryId
+      }
+      this.$axios.get(address)
+        .then(response => {
+          this.unitsLoading = false
+          this.units = response.data.results
+        })
+        .catch(() => {
+          this.unitsLoading = false
+        })
+    },
+    openFilterDialog () {
+      this.filterDialog = true
     }
   }
 }
@@ -245,6 +408,23 @@ export default {
         border-top-right-radius: 0;
         border-top-left-radius: 0;
       }
+    }
+  }
+}
+</style>
+
+<style lang="scss">
+.all-classroom-widget.filter-card {
+  background-color: #F9F9F9;
+  .filter-card-header {
+    margin-bottom: 53px;
+    padding-bottom: 0;
+  }
+  .filter-card-filter-actions {
+    display: flex;
+    justify-content: end;
+    button {
+      width: 158px;
     }
   }
 }

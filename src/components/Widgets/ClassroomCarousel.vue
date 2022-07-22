@@ -107,7 +107,7 @@
             <q-btn color="primary"
                    class="btn-show-classroom"
             >
-              مشاهده و ثبت نام
+              جزییات دوره
               <svg xmlns="http://www.w3.org/2000/svg"
                    width="18.387"
                    height="11.502"

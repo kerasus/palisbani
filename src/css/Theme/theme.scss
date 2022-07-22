@@ -10,6 +10,9 @@
 
 
 .main-layout {
+  &:not(.isHomePage) > .q-layout {
+    background: #FFFFFF;
+  }
   & > .q-layout {
     background: #F5F5F5;
   }
