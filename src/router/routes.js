@@ -92,6 +92,20 @@ const routes = [
               { name: 'Admin.Classroom.Create', path: 'create', component: () => import('pages/Admin/Classroom/create.vue') },
               { name: 'Admin.Classroom.Show', path: ':id', component: () => import('pages/Admin/Classroom/show.vue') }
             ]
+          },
+          {
+            name: 'Admin.Session',
+            path: 'session',
+            component: () => import('layouts/bareLayout.vue'),
+            breadcrumbs: { title: 'طلیعه حکمت' },
+            meta: {
+              middlewares: [auth]
+            },
+            children: [
+              { name: 'Admin.Session.Index', path: '', component: () => import('pages/Admin/Session/index.vue') },
+              { name: 'Admin.Session.Create', path: 'create', component: () => import('pages/Admin/Session/create.vue') },
+              { name: 'Admin.Session.Show', path: ':id', component: () => import('pages/Admin/Session/show.vue') }
+            ]
           }
           // ...allEntityCrudRouteObjects
         ]

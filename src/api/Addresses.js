@@ -31,6 +31,9 @@ const API_ADDRESS = {
   classroom: {
     base: server + '/lma/classrooms'
   },
+  group: {
+    base: server + '/uma/groups?per_page=300'
+  },
   media: {
     upload: ''
   }

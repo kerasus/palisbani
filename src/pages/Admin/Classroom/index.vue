@@ -9,6 +9,8 @@
     :api="api"
     :table="table"
     :table-keys="tableKeys"
+    :show-expand-button="false"
+    :show-reload-button="false"
   >
     <template #table-cell="{inputData, showConfirmRemoveDialog}">
       <q-td :props="inputData.props">
@@ -51,7 +53,10 @@ export default {
   },
   data () {
     return {
-      inputs: [],
+      inputs: [
+        { type: 'input', name: 'title', label: 'نام دوره', col: 'col-md-6' },
+        { type: 'input', name: 'title', label: 'نام درس', col: 'col-md-6' }
+      ],
       api: API_ADDRESS.classroom.base,
       table: {
         columns: [
@@ -67,7 +72,7 @@ export default {
             required: true,
             label: 'نام درس',
             align: 'left',
-            field: row => row.title
+            field: row => row.unit_info.title
           },
           {
             name: 'audience_gender_type',
