@@ -25,41 +25,7 @@ export default {
                   {
                     widgets: [
                       {
-                        name: 'HomePageFirstSection'
-                      }
-                    ]
-                  }
-                ],
-                options: {
-                  boxed: true
-                }
-              }
-            ]
-          },
-          options: {
-            fullHeight: true,
-            verticalAlign: 'center',
-            background: {
-              image: 'assets/images/web/homepage-first-section-background.png',
-              position: 'center',
-              size: 'cover',
-              repeat: 'no-repeat',
-              attachment: 'fixed' // unset - fixed
-            },
-            style: {
-              marginTop: '-98px'
-            }
-          }
-        },
-        {
-          data: {
-            rows: [
-              {
-                cols: [
-                  {
-                    widgets: [
-                      {
-                        name: 'ClassroomCarousel'
+                        name: 'AllClassrooms'
                       }
                     ]
                   }

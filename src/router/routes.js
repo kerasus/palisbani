@@ -11,7 +11,8 @@ const routes = [
         name: 'User',
         component: () => import('layouts/bareLayout.vue'),
         children: [
-          { name: 'UserPanel.Home', path: '', component: () => import('pages/User/index.vue') }
+          { name: 'UserPanel.Home', path: '', component: () => import('pages/User/index.vue') },
+          { name: 'UserPanel.AllClassrooms', path: 'all-classrooms', component: () => import('pages/User/classrooms.vue') }
           // { name: 'UserPanel.Content', path: 'content/:content_id', component: () => import('pages/User/Content.vue') },
           // { name: 'UserPanel.Category', path: 'category/:category_id', component: () => import('pages/User/Category.vue') }
         ]

@@ -1,40 +1,64 @@
 <template>
-  <div class="classroomCarousel">
-    <div class="classroomCarousel-title">
+  <div class="all-classroom">
+    <div class="all-classroom-title">
       <div>
         <q-banner class="banner">
           دوره های آموزشی
         </q-banner>
       </div>
-      <div>
-        <q-btn flat
-               :to="{name: 'UserPanel.AllClassrooms'}"
+      <div class="all-classroom-filter">
+        <q-btn outline
+               color="primary"
+               class="btn-filter"
         >
-          مشاهده همه
+          فیلتر
           <svg xmlns="http://www.w3.org/2000/svg"
-               width="18.387"
-               height="11.502"
-               viewBox="0 0 18.387 11.502"
-               class="q-ml-sm"
-          >
-            <path id="Combined_Shape"
-                  data-name="Combined Shape"
-                  d="M-9.338,11.408a.748.748,0,0,0,.388-.656V6.5h8.2A.751.751,0,0,0,0,5.75.75.75,0,0,0-.75,5h-8.2V.75A.751.751,0,0,0-9.338.093.769.769,0,0,0-9.7,0a.735.735,0,0,0-.4.115l-7.938,5a.747.747,0,0,0-.35.635.742.742,0,0,0,.35.634l7.938,5a.751.751,0,0,0,.4.116A.746.746,0,0,0-9.338,11.408ZM-10.45,9.392l-5.78-3.641,5.78-3.642Z"
-                  transform="translate(18.387)"
-                  fill="#eac38a" />
+               width="19.5"
+               height="19.501"
+               viewBox="0 0 19.5 19.501"
+               class="q-ml-sm">
+            <g id="Filter_2"
+               data-name="Filter 2"
+               transform="translate(0 0)">
+              <path id="Fill_1"
+                    data-name="Fill 1"
+                    d="M8.146,19.5A1.151,1.151,0,0,1,7,18.346V13.774a4.39,4.39,0,0,0-1.194-3.022.717.717,0,0,1-.066-.062L.893,5.536A3.283,3.283,0,0,1,0,3.277V2.341A2.331,2.331,0,0,1,2.315,0H17.186A2.33,2.33,0,0,1,19.5,2.341v.936a3.294,3.294,0,0,1-.891,2.258l-4.847,5.154a4.39,4.39,0,0,0-1.242,3.073v2.287a2.058,2.058,0,0,1-1.066,1.808l-2.761,1.5A1.147,1.147,0,0,1,8.146,19.5ZM2.315,1.5a.829.829,0,0,0-.815.841v.936a1.785,1.785,0,0,0,.485,1.23L6.773,9.6a.648.648,0,0,1,.051.049A5.874,5.874,0,0,1,8.5,13.774v3.984l2.236-1.218a.557.557,0,0,0,.284-.491V13.762a5.859,5.859,0,0,1,1.659-4.109l4.837-5.145A1.789,1.789,0,0,0,18,3.277V2.341a.828.828,0,0,0-.814-.841Z"
+                    transform="translate(0 0)"
+                    fill="#475f4a" />
+            </g>
           </svg>
         </q-btn>
+        <q-input filled
+                 label="جستجوی دوره آموزشی "
+                 class="input-filter"
+        >
+          <template v-slot:append>
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="20.265"
+                 height="20.722"
+                 viewBox="0 0 20.265 20.722">
+              <g id="Search"
+                 transform="translate(0)">
+                <path id="Combined_Shape"
+                      data-name="Combined Shape"
+                      d="M18.985,20.5l-3.169-3.16a9.755,9.755,0,1,1,1.1-1.026l3.132,3.124a.75.75,0,0,1-1.06,1.062ZM1.5,9.738A8.238,8.238,0,1,0,9.739,1.5,8.247,8.247,0,0,0,1.5,9.738Z"
+                      transform="translate(0 0)"
+                      fill="#475f4a" />
+              </g>
+            </svg>
+          </template>
+        </q-input>
       </div>
     </div>
-    <carousel v-if="classrooms.length > 0"
-              :breakpoints="breakpoints"
-              wrapAround
-              dir="rtl">
-      <slide v-for="classroom in classrooms"
-             :key="classroom.id"
+    <div v-if="classrooms.length > 0"
+         class="classrooms row"
+    >
+      <div v-for="classroom in classrooms"
+           :key="classroom.id"
+           class="classroom-col col-md-4"
       >
         <q-card flat
-                class="classroomCarousel-item">
+                class="classroom-item">
           <q-card-section class="thumbnail">
             <q-img class="q-ma-xs"
                    :src="classroom.thumbnail" />
@@ -121,52 +145,19 @@
             </q-btn>
           </q-card-actions>
         </q-card>
-      </slide>
-
-      <template #addons="{ slidesCount }">
-        <Navigation v-if="slidesCount > 1" />
-        <pagination v-if="slidesCount > 1" />
-      </template>
-    </carousel>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import API_ADDRESS from 'src/api/Addresses'
-import 'vue3-carousel/dist/carousel.css'
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel/dist/carousel'
 
 export default {
-  name: 'ClassroomCarousel',
-  components: {
-    Carousel,
-    Slide,
-    Pagination,
-    Navigation
-  },
+  name: 'AllClassrooms',
   data: () => ({
     loading: false,
-    slide: 0,
-    classrooms: [],
-    breakpoints: {
-      // 1024 and up
-      1024: {
-        itemsToShow: 3,
-        snapAlign: 'start'
-      },
-      // 700px and up
-      700: {
-        itemsToShow: 2.5,
-        snapAlign: 'center'
-      },
-      // 300px and up
-      300: {
-        itemsToShow: 1.5,
-        snapAlign: 'center'
-      }
-    },
-    maximizedToggle: true,
-    dialog: false
+    classrooms: []
   }),
   created () {
     this.getClassrooms()
@@ -174,7 +165,7 @@ export default {
   methods: {
     getClassrooms () {
       this.loading = true
-      this.$axios.get(API_ADDRESS.classroom.base)
+      this.$axios.get(API_ADDRESS.classroom.base + '?per_page=9999')
         .then(response => {
           this.classrooms = response.data.results
           this.loading = false
@@ -188,16 +179,34 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.classroomCarousel {
+.all-classroom {
   padding: 60px 0;
-  .classroomCarousel-title {
+  .all-classroom-title {
     display: flex;
     flex-flow: row;
     justify-content: space-between;
     padding-bottom: 33px;
   }
-  .classroomCarousel-item {
+  .all-classroom-filter {
+    display: flex;
+    flex-flow: row;
+    .btn-filter {
+      margin-right: 20px;
+    }
+  }
+  .input-filter {
+    &::v-deep {
+      .q-field__control {
+        border-radius: 8px;
+        .q-field__native {
+          padding-top: 8px;
+        }
+      }
+    }
+  }
+  .classroom-item {
     width: 100%;
+    background-color: #F6F6F6;
     .thumbnail {
       padding-top: 17px;
       padding-left: 22px;
