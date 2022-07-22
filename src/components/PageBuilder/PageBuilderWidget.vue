@@ -15,7 +15,8 @@ export default {
   // components,
   components: {
     PageBuilderSection: defineAsyncComponent(() => import('./PageBuilderSection.vue')),
-    HomePageFirstSection: defineAsyncComponent(() => import('components/Widgets/HomePage/FirstSection.vue'))
+    HomePageFirstSection: defineAsyncComponent(() => import('components/Widgets/HomePage/FirstSection.vue')),
+    ClassroomCarousel: defineAsyncComponent(() => import('components/Widgets/ClassroomCarousel.vue'))
     // TestComponent1Widget: defineAsyncComponent(() => import('components/Widgets/TestComponent1Widget.vue')),
     // TestComponent2Widget: defineAsyncComponent(() => import('components/Widgets/TestComponent2Widget.vue')),
     // BlockComponent: defineAsyncComponent(() => import('components/Widgets/Block/Block.vue')),

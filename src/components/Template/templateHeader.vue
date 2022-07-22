@@ -3,8 +3,10 @@
     <div v-if="isAdminPage"
          class="admin-top-menu">
       <div class="logo">
-        <q-img class="logo-image"
-               src="/assets/images/admin/layout/admin-logo.png" />
+        <router-link :to="{name: 'UserPanel.Home'}">
+          <q-img class="logo-image"
+                 src="/assets/images/admin/layout/admin-logo.png" />
+        </router-link>
       </div>
       <div class="top-menu-items"></div>
     </div>
@@ -17,6 +19,7 @@
                round
                dense
                class="top-menu-logo"
+               :to="{name: 'UserPanel.Home'}"
         >
           <q-img src="assets/images/web/user-top-menu-logo.png"
                  width="53" />
@@ -83,155 +86,6 @@
         />
       </q-toolbar>
     </div>
-    <!--    <div-->
-    <!--      class="drawer-btn"-->
-    <!--      :class="{'col-6': windowSize.x < 599}"-->
-    <!--    >-->
-    <!--      <q-btn-->
-    <!--        class="toolbar-button"-->
-    <!--        icon="isax:menu-1"-->
-    <!--        color="white"-->
-    <!--        text-color="accent"-->
-    <!--        dense-->
-    <!--        unelevated-->
-    <!--        @click="toggleLeftDrawer"-->
-    <!--      />-->
-    <!--    </div>-->
-    <!--    <div-->
-    <!--      class="right-side"-->
-    <!--      :class="{'col-6': windowSize.x > 1439, 'col-12': windowSize.x < 599}"-->
-    <!--    >-->
-    <!--      <div-->
-    <!--        v-if="false"-->
-    <!--      >-->
-    <!--        <q-skeleton-->
-    <!--          v-if="!breadcrumbs.path"-->
-    <!--          width="100px"-->
-    <!--          height="10px"-->
-    <!--        />-->
-    <!--        <q-breadcrumbs-->
-    <!--          v-else-->
-    <!--          class="breadcrumbs"-->
-    <!--          separator-color="dark"-->
-    <!--          gutter="sm"-->
-    <!--        >-->
-    <!--          <template v-slot:separator>-->
-    <!--            <q-icon name="isax:arrow-right-3 " />-->
-    <!--          </template>-->
-    <!--          <q-breadcrumbs-el-->
-    <!--            v-for="(breadcrumb, index) in breadcrumbs.path"-->
-    <!--            :key="index"-->
-    <!--          >-->
-    <!--            <q-skeleton-->
-    <!--              v-if="breadcrumb.loading"-->
-    <!--              width="100px"-->
-    <!--              height="10px"-->
-    <!--            />-->
-    <!--            <q-breadcrumbs-el-->
-    <!--              v-else-->
-    <!--              :icon=breadcrumb.icon-->
-    <!--              :label=breadcrumb.title-->
-    <!--              :to="getRoute(breadcrumb.route)"-->
-    <!--              class="q-breadcrumbs-el"-->
-    <!--            />-->
-    <!--          </q-breadcrumbs-el>-->
-    <!--        </q-breadcrumbs>-->
-    <!--      </div>-->
-    <!--      <q-btn-group v-if="!isAdminPage"-->
-    <!--                   class="top-menu-items"-->
-    <!--      >-->
-    <!--        <q-btn v-for="(menuItem, index) in topMenuItems"-->
-    <!--               :key="index"-->
-    <!--               color="gray"-->
-    <!--               :label="menuItem.title"-->
-    <!--               :href="menuItem.scrollTo"-->
-    <!--        />-->
-    <!--      </q-btn-group>-->
-    <!--    </div>-->
-    <!--    <div-->
-    <!--      class="left-side"-->
-    <!--      :class="{'col-6': windowSize.x < 599, 'col-6': windowSize.x > 1439}">-->
-    <!--      <q-btn-dropdown-->
-    <!--        v-if="false"-->
-    <!--        class="toolbar-button"-->
-    <!--        content-class="profile-menu"-->
-    <!--        icon="isax:notification"-->
-    <!--        dropdown-icon="false"-->
-    <!--        color="white"-->
-    <!--        text-color="accent"-->
-    <!--        dir="ltr"-->
-    <!--        dense-->
-    <!--        unelevated-->
-    <!--      />-->
-    <!--      <q-btn-dropdown-->
-    <!--        v-if="user && typeof user.id !== 'undefined' && user.id !== null && !isAdminPage"-->
-    <!--        class="toolbar-button"-->
-    <!--        content-class="profile-menu"-->
-    <!--        icon="isax:setting"-->
-    <!--        dropdown-icon="false"-->
-    <!--        color="white"-->
-    <!--        text-color="accent"-->
-    <!--        dir="ltr"-->
-    <!--        dense-->
-    <!--        unelevated-->
-    <!--        @click="goToAdminDashboard"-->
-    <!--      />-->
-    <!--      <q-btn-dropdown-->
-    <!--        v-if="user && typeof user.id !== 'undefined' && user.id !== null && isAdminPage"-->
-    <!--        class="toolbar-button"-->
-    <!--        content-class="profile-menu"-->
-    <!--        icon="isax:home"-->
-    <!--        dropdown-icon="false"-->
-    <!--        color="white"-->
-    <!--        text-color="accent"-->
-    <!--        dir="ltr"-->
-    <!--        dense-->
-    <!--        unelevated-->
-    <!--        @click="goToHome"-->
-    <!--      />-->
-    <!--      <q-btn-dropdown-->
-    <!--        v-if="user && typeof user.id !== 'undefined' && user.id !== null"-->
-    <!--        class="toolbar-button"-->
-    <!--        content-class="profile-menu"-->
-    <!--        icon="isax:logout"-->
-    <!--        dropdown-icon="false"-->
-    <!--        color="white"-->
-    <!--        text-color="accent"-->
-    <!--        dir="ltr"-->
-    <!--        dense-->
-    <!--        unelevated-->
-    <!--        @click="logOut"-->
-    <!--      >-->
-    <!--        <q-list v-if="false">-->
-    <!--          <q-item clickable-->
-    <!--                  v-close-popup-->
-    <!--                  @click="goToHome"-->
-    <!--          >-->
-    <!--            <q-item-section>-->
-    <!--              <q-item-label>صفحه اصلی</q-item-label>-->
-    <!--            </q-item-section>-->
-    <!--          </q-item>-->
-    <!--          <q-item clickable-->
-    <!--                  v-close-popup-->
-    <!--                  @click="logOut"-->
-    <!--          >-->
-    <!--            <q-item-section>-->
-    <!--              <q-item-label>خروج</q-item-label>-->
-    <!--            </q-item-section>-->
-    <!--          </q-item>-->
-    <!--        </q-list>-->
-    <!--      </q-btn-dropdown>-->
-    <!--      <q-btn-->
-    <!--        v-else-->
-    <!--        class="toolbar-button"-->
-    <!--        icon="isax:login"-->
-    <!--        color="white"-->
-    <!--        text-color="accent"-->
-    <!--        dense-->
-    <!--        unelevated-->
-    <!--        @click="logOut"-->
-    <!--      />-->
-    <!--    </div>-->
   </div>
 </template>
 

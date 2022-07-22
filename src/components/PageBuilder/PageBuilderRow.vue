@@ -62,11 +62,11 @@ export default {
 
 <style lang="scss" scoped>
 .boxed {
-  max-width: 1200px;
+  max-width: 1476px;
   margin-right: auto;
   margin-left: auto;
-  width: 1200px;
-  @media only screen and (max-width: 1200px) {
+  width: 1476px;
+  @media only screen and (max-width: 1476px) {
     padding-right: 15px;
     padding-left: 15px;
     width: 100%;

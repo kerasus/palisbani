@@ -96,19 +96,11 @@ export default defineComponent({
     Object.assign(this.properties, localData)
   },
   mounted () {
-    this.updateLayoute()
+    this.$store.dispatch('AppLayout/updateLayoute', {
+      routeName: this.$route.name
+    })
   },
-
   methods: {
-    updateLayoute () {
-      this.$store.commit('AppLayout/updateVisibilityBreadcrumb', this.isAdminPage)
-      this.$store.commit('AppLayout/updateLayoutLeftDrawerVisible', this.isAdminPage)
-      if (this.isAdminPage) {
-        this.$store.commit('AppLayout/updateLayoutView', 'hHh lpR fFf')
-      } else {
-        this.$store.commit('AppLayout/updateLayoutView', 'lhh LpR fFf')
-      }
-    },
     setHeaderDimension (value) {
       // this.$refs.contentInside.style.height = 'calc(100vh +' + value.height + 'px'
     },
